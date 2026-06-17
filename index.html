@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Review Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .star-btn { cursor: pointer; transition: transform 0.1s; }
+        .star-btn:hover { transform: scale(1.2); }
+        .tab-active { border-bottom: 3px solid #f59e0b; color: #f59e0b; }
+        .score-bar { transition: width 0.8s ease-in-out; }
+        .toast { animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; pointer-events: none; } }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+
+        /* Background scene */
+        body {
+            background-color: #c9e8f7;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='900' viewBox='0 0 1440 900'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23a8d8f0'/%3E%3Cstop offset='100%25' stop-color='%23dff0fb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1440' height='900' fill='url(%23sky)'/%3E%3C!-- Clouds --%3E%3Cellipse cx='200' cy='80' rx='90' ry='35' fill='white' opacity='0.85'/%3E%3Cellipse cx='260' cy='65' rx='70' ry='30' fill='white' opacity='0.85'/%3E%3Cellipse cx='140' cy='75' rx='55' ry='25' fill='white' opacity='0.85'/%3E%3Cellipse cx='900' cy='110' rx='100' ry='38' fill='white' opacity='0.8'/%3E%3Cellipse cx='970' cy='92' rx='75' ry='32' fill='white' opacity='0.8'/%3E%3Cellipse cx='830' cy='105' rx='60' ry='26' fill='white' opacity='0.8'/%3E%3Cellipse cx='1300' cy='60' rx='80' ry='30' fill='white' opacity='0.75'/%3E%3Cellipse cx='1360' cy='48' rx='60' ry='25' fill='white' opacity='0.75'/%3E%3Cellipse cx='550' cy='150' rx='70' ry='28' fill='white' opacity='0.7'/%3E%3Cellipse cx='610' cy='138' rx='55' ry='23' fill='white' opacity='0.7'/%3E%3C!-- Airplane top-right --%3E%3Cg transform='translate(1150,160) rotate(-8)'%3E%3C!-- fuselage --%3E%3Cellipse cx='0' cy='0' rx='72' ry='18' fill='white'/%3E%3C!-- nose --%3E%3Cellipse cx='68' cy='0' rx='16' ry='12' fill='%23f0f4ff'/%3E%3C!-- tail fin --%3E%3Cpolygon points='-72,-2 -55,-28 -40,-2' fill='%23b0c4de'/%3E%3C!-- tail wing --%3E%3Cpolygon points='-65,2 -45,18 -30,2' fill='%23b0c4de'/%3E%3C!-- main wings --%3E%3Cpolygon points='-10,-2 20,-2 35,-38 5,-38' fill='%23dce8f5'/%3E%3Cpolygon points='-10,2 20,2 35,38 5,38' fill='%23dce8f5'/%3E%3C!-- windows --%3E%3Ccircle cx='30' cy='-4' r='5' fill='%2393c5fd' opacity='0.9'/%3E%3Ccircle cx='14' cy='-4' r='5' fill='%2393c5fd' opacity='0.9'/%3E%3Ccircle cx='-2' cy='-4' r='5' fill='%2393c5fd' opacity='0.9'/%3E%3Ccircle cx='46' cy='-3' r='4' fill='%2393c5fd' opacity='0.9'/%3E%3C!-- stripe --%3E%3Crect x='-68' y='-4' width='128' height='8' rx='4' fill='%233b82f6' opacity='0.25'/%3E%3C/g%3E%3C!-- German Shepherd bottom-left --%3E%3Cg transform='translate(60,720)'%3E%3C!-- body --%3E%3Cellipse cx='0' cy='0' rx='68' ry='40' fill='%23c8922a'/%3E%3C!-- darker saddle --%3E%3Cellipse cx='0' cy='-8' rx='48' ry='26' fill='%23663d00' opacity='0.55'/%3E%3C!-- neck --%3E%3Cellipse cx='60' cy='-22' rx='24' ry='18' fill='%23c8922a'/%3E%3C!-- head --%3E%3Cellipse cx='82' cy='-42' rx='26' ry='22' fill='%23c8922a'/%3E%3C!-- snout --%3E%3Cellipse cx='103' cy='-36' rx='14' ry='10' fill='%23e0b060'/%3E%3C!-- nose --%3E%3Cellipse cx='114' cy='-33' rx='5' ry='4' fill='%23331a00'/%3E%3C!-- eye --%3E%3Ccircle cx='96' cy='-46' r='4' fill='%23331a00'/%3E%3Ccircle cx='97' cy='-47' r='1.5' fill='white'/%3E%3C!-- ear left --%3E%3Cpolygon points='75,-60 65,-88 90,-62' fill='%23c8922a'/%3E%3Cpolygon points='76,-62 68,-84 88,-63' fill='%23663d00' opacity='0.6'/%3E%3C!-- ear right --%3E%3Cpolygon points='92,-58 86,-85 105,-56' fill='%23c8922a'/%3E%3Cpolygon points='93,-59 88,-82 103,-57' fill='%23663d00' opacity='0.6'/%3E%3C!-- front legs --%3E%3Crect x='40' y='30' width='16' height='44' rx='8' fill='%23c8922a'/%3E%3Crect x='62' y='32' width='16' height='42' rx='8' fill='%23c8922a'/%3E%3C!-- back legs --%3E%3Crect x='-52' y='28' width='16' height='46' rx='8' fill='%23c8922a'/%3E%3Crect x='-30' y='30' width='16' height='44' rx='8' fill='%23c8922a'/%3E%3C!-- paws --%3E%3Cellipse cx='48' cy='74' rx='10' ry='6' fill='%23b07820'/%3E%3Cellipse cx='70' cy='74' rx='10' ry='6' fill='%23b07820'/%3E%3Cellipse cx='-44' cy='74' rx='10' ry='6' fill='%23b07820'/%3E%3Cellipse cx='-22' cy='74' rx='10' ry='6' fill='%23b07820'/%3E%3C!-- tail (curving up) --%3E%3Cpath d='M-68,0 Q-110,-30 -95,-70' stroke='%23c8922a' stroke-width='14' fill='none' stroke-linecap='round'/%3E%3Cpath d='M-68,0 Q-110,-30 -95,-70' stroke='%23e0c080' stroke-width='5' fill='none' stroke-linecap='round' opacity='0.5'/%3E%3C!-- chest/belly lighter fur --%3E%3Cellipse cx='60' cy='10' rx='18' ry='14' fill='%23e8c878' opacity='0.7'/%3E%3C/g%3E%3C!-- Small airplane bottom-right (smaller, different angle) --%3E%3Cg transform='translate(1340,800) rotate(12) scale(0.6)'%3E%3Cellipse cx='0' cy='0' rx='72' ry='18' fill='white' opacity='0.9'/%3E%3Cellipse cx='68' cy='0' rx='16' ry='12' fill='%23f0f4ff' opacity='0.9'/%3E%3Cpolygon points='-72,-2 -55,-28 -40,-2' fill='%23b0c4de' opacity='0.9'/%3E%3Cpolygon points='-65,2 -45,18 -30,2' fill='%23b0c4de' opacity='0.9'/%3E%3Cpolygon points='-10,-2 20,-2 35,-38 5,-38' fill='%23dce8f5' opacity='0.9'/%3E%3Cpolygon points='-10,2 20,2 35,38 5,38' fill='%23dce8f5' opacity='0.9'/%3E%3Ccircle cx='30' cy='-4' r='5' fill='%2393c5fd'/%3E%3Ccircle cx='14' cy='-4' r='5' fill='%2393c5fd'/%3E%3Ccircle cx='-2' cy='-4' r='5' fill='%2393c5fd'/%3E%3C/g%3E%3C!-- Second dog (smaller, sitting, top-left area) --%3E%3Cg transform='translate(1380,680) scale(0.55)'%3E%3C!-- sitting body --%3E%3Cellipse cx='0' cy='0' rx='45' ry='35' fill='%23c8922a'/%3E%3Cellipse cx='0' cy='-6' rx='32' ry='20' fill='%23663d00' opacity='0.5'/%3E%3C!-- neck/head --%3E%3Cellipse cx='0' cy='-50' rx='28' ry='24' fill='%23c8922a'/%3E%3Cellipse cx='18' cy='-44' rx='14' ry='10' fill='%23e0b060'/%3E%3Cellipse cx='28' cy='-41' rx='5' ry='4' fill='%23331a00'/%3E%3Ccircle cx='10' cy='-54' r='4' fill='%23331a00'/%3E%3Ccircle cx='11' cy='-55' r='1.5' fill='white'/%3E%3Cpolygon points='-8,-70 -18,-96 6,-68' fill='%23c8922a'/%3E%3Cpolygon points='-7,-71 -15,-93 5,-69' fill='%23663d00' opacity='0.6'/%3E%3Cpolygon points='10,-68 4,-93 22,-65' fill='%23c8922a'/%3E%3Cpolygon points='11,-69 6,-91 21,-66' fill='%23663d00' opacity='0.6'/%3E%3C!-- sitting front legs --%3E%3Crect x='-20' y='20' width='14' height='38' rx='7' fill='%23c8922a'/%3E%3Crect x='6' y='20' width='14' height='38' rx='7' fill='%23c8922a'/%3E%3Cellipse cx='-13' cy='58' rx='9' ry='5' fill='%23b07820'/%3E%3Cellipse cx='13' cy='58' rx='9' ry='5' fill='%23b07820'/%3E%3C!-- tail --%3E%3Cpath d='M-44,10 Q-70,-10 -60,-45' stroke='%23c8922a' stroke-width='11' fill='none' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+        /* Semi-transparent panels */
+        .panel-glass {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(6px);
+        }
+
+        /* Edit modal */
+        #editModal { display: none; }
+        #editModal.open { display: flex; }
+
+        /* Score breakdown row expand */
+        .breakdown-row { display: none; }
+        .breakdown-row.open { display: table-row; }
+
+        /* Idea Board */
+        .idea-card { transition: box-shadow 0.2s, transform 0.15s, opacity 0.15s; }
+        .idea-card.dragging { opacity: 0.45; transform: scale(1.02); box-shadow: 0 12px 32px rgba(0,0,0,0.18); }
+        .idea-card.drag-over { box-shadow: 0 0 0 2px #6366f1, 0 4px 16px rgba(99,102,241,0.15); }
+        .drop-indicator { height: 3px; background: #6366f1; border-radius: 2px; margin: 2px 0; transition: opacity 0.15s; }
+        .drag-handle { cursor: grab; user-select: none; }
+        .drag-handle:active { cursor: grabbing; }
+        .completed-card { opacity: 0.65; }
+        #completedSection { display: none; }
+        #completedSection.open { display: block; }
+    </style>
+</head>
+<body class="min-h-screen font-sans">
+ 
+
+<!-- Header -->
+<header class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white shadow-2xl sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl">🌟</span>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight">Experience Review Tracker</h1>
+                <p class="text-blue-300 text-xs">Rate, rank & remember every adventure</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <span id="liveCount" class="text-blue-200 text-sm hidden"></span>
+            <span class="flex items-center gap-1.5 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                🌐 Live
+            </span>
+        </div>
+    </div>
+    <!-- Tabs -->
+    <div class="max-w-6xl mx-auto px-4 flex gap-1 overflow-x-auto">
+        <button onclick="switchTab('log')" id="tab-log" class="tab-btn tab-active px-4 py-3 text-sm font-semibold whitespace-nowrap text-white/70 hover:text-white transition-colors">📝 Log Experience</button>
+        <button onclick="switchTab('league')" id="tab-league" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap text-white/70 hover:text-white transition-colors">🏆 League Table</button>
+        <button onclick="switchTab('suggestions')" id="tab-suggestions" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap text-white/70 hover:text-white transition-colors">💡 Suggestions</button>
+        <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap text-white/70 hover:text-white transition-colors">📊 Analytics</button>
+        <button onclick="switchTab('ideas')" id="tab-ideas" class="tab-btn px-4 py-3 text-sm font-semibold whitespace-nowrap text-white/70 hover:text-white transition-colors">💡 Idea Board</button>
+    </div>
+</header>
+
+<!-- Toast -->
+<div id="toastContainer" class="fixed top-20 right-4 z-50 flex flex-col gap-2"></div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="fixed inset-0 bg-black/50 z-50 items-center justify-center p-4 overflow-y-auto">
+    <div class="panel-glass rounded-2xl shadow-2xl w-full max-w-lg border border-white/60 my-4">
+        <div class="flex items-center justify-between p-6 border-b border-gray-100">
+            <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-indigo-100 text-indigo-600 p-2 rounded-xl">✏️</span>
+                Edit Experience
+            </h2>
+            <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none transition-colors">&times;</button>
+        </div>
+        <form id="editForm" class="p-6 space-y-4">
+            <input type="hidden" id="e_id"/>
+            <div>
+                <label class="block text-sm font-semibold text-gray-600 mb-1">Experience Name *</label>
+                <input type="text" id="e_name" required placeholder="e.g. Sushi Dinner at Nobu"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"/>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Date *</label>
+                    <input type="date" id="e_date" required
+                        class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"/>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-600 mb-1">Category *</label>
+                    <select id="e_category" required
+                        class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-white">
+                        <option value="">Select...</option>
+                        <option value="Date Night">🌹 Date Night</option>
+                        <option value="Day Activity">☀️ Day Activity</option>
+                        <option value="Sports">⚽ Sports</option>
+                        <option value="Holiday Related">✈️ Holiday Related</option>
+                        <option value="Other">✨ Other</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-600 mb-1">Organiser *</label>
+                <input type="text" id="e_organiser" required placeholder="Who organised this?"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"/>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-600 mb-1">Notes</label>
+                <textarea id="e_notes" rows="2" placeholder="Any memorable moments?"
+                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition resize-none"></textarea>
+            </div>
+            <!-- Edit Star Ratings -->
+            <div class="bg-indigo-50 rounded-xl p-4 space-y-3">
+                <p class="text-sm font-bold text-gray-700 mb-2">⭐ Update Ratings</p>
+                <div id="editStarRatings" class="space-y-3">
+                    <div class="star-row flex items-center justify-between" data-field="e_food_drink">
+                        <span class="text-sm font-medium text-gray-700 w-36">🍽️ Food &amp; Drink</span>
+                        <div class="flex gap-1" id="estars-food_drink">
+                            <span class="star-btn text-2xl" data-val="1">☆</span>
+                            <span class="star-btn text-2xl" data-val="2">☆</span>
+                            <span class="star-btn text-2xl" data-val="3">☆</span>
+                            <span class="star-btn text-2xl" data-val="4">☆</span>
+                            <span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs text-gray-400 w-6 text-right" id="eval-food_drink">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_location_venue">
+                        <span class="text-sm font-medium text-gray-700 w-36">📍 Location/Venue</span>
+                        <div class="flex gap-1" id="estars-location_venue">
+                            <span class="star-btn text-2xl" data-val="1">☆</span>
+                            <span class="star-btn text-2xl" data-val="2">☆</span>
+                            <span class="star-btn text-2xl" data-val="3">☆</span>
+                            <span class="star-btn text-2xl" data-val="4">☆</span>
+                            <span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs text-gray-400 w-6 text-right" id="eval-location_venue">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_atmosphere">
+                        <span class="text-sm font-medium text-gray-700 w-36">🎭 Atmosphere</span>
+                        <div class="flex gap-1" id="estars-atmosphere">
+                            <span class="star-btn text-2xl" data-val="1">☆</span>
+                            <span class="star-btn text-2xl" data-val="2">☆</span>
+                            <span class="star-btn text-2xl" data-val="3">☆</span>
+                            <span class="star-btn text-2xl" data-val="4">☆</span>
+                            <span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs text-gray-400 w-6 text-right" id="eval-atmosphere">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_recommend">
+                        <span class="text-sm font-medium text-gray-700 w-36">👍 Recommend</span>
+                        <div class="flex gap-1" id="estars-recommend">
+                            <span class="star-btn text-2xl" data-val="1">☆</span>
+                            <span class="star-btn text-2xl" data-val="2">☆</span>
+                            <span class="star-btn text-2xl" data-val="3">☆</span>
+                            <span class="star-btn text-2xl" data-val="4">☆</span>
+                            <span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs text-gray-400 w-6 text-right" id="eval-recommend">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_enjoyment">
+                        <span class="text-sm font-medium text-gray-700 w-36">😄 Enjoyment</span>
+                        <div class="flex gap-1" id="estars-enjoyment">
+                            <span class="star-btn text-2xl" data-val="1">☆</span>
+                            <span class="star-btn text-2xl" data-val="2">☆</span>
+                            <span class="star-btn text-2xl" data-val="3">☆</span>
+                            <span class="star-btn text-2xl" data-val="4">☆</span>
+                            <span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs text-gray-400 w-6 text-right" id="eval-enjoyment">0</span>
+                    </div>
+                </div>
+                <div class="border-t border-indigo-200 pt-3 mt-2 flex items-center justify-between">
+                    <span class="text-sm font-bold text-gray-700">Total Score</span>
+                    <span id="editTotalScore" class="text-2xl font-black text-indigo-600">0 <span class="text-sm text-gray-400 font-normal">/ 25</span></span>
+                </div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="closeEditModal()"
+                    class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl transition-all">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-2.5 rounded-xl transition-all shadow-lg active:scale-95">
+                    💾 Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+ 
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="fixed inset-0 bg-black/40 z-45 flex items-center justify-center hidden">
+ 
+    <div class="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 shadow-2xl">
+        <svg class="spinner w-10 h-10 text-blue-600" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <p class="text-gray-600 font-medium">Loading...</p>
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+
+    <!-- TAB 1: LOG EXPERIENCE -->
+    <div id="panel-log" class="tab-panel">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- Form -->
+            <div class="lg:col-span-2">
+                <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+ 
+                    <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
+                        <span class="bg-amber-100 text-amber-600 p-2 rounded-xl">📝</span>
+                        Log New Experience
+                    </h2>
+                    <form id="experienceForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1">Experience Name *</label>
+                            <input type="text" id="f_name" required placeholder="e.g. Sushi Dinner at Nobu"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"/>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-1">Date *</label>
+                                <input type="date" id="f_date" required
+                                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-1">Category *</label>
+                                <select id="f_category" required
+                                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition bg-white">
+                                    <option value="">Select...</option>
+                                    <option value="Date Night">🌹 Date Night</option>
+                                    <option value="Day Activity">☀️ Day Activity</option>
+                                    <option value="Sports">⚽ Sports</option>
+                                    <option value="Holiday Related">✈️ Holiday Related</option>
+                                    <option value="Other">✨ Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1">Organiser *</label>
+                            <input type="text" id="f_organiser" required placeholder="Who organised this?"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1">Notes</label>
+                            <textarea id="f_notes" rows="3" placeholder="Any memorable moments?"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none"></textarea>
+                        </div>
+
+                        <!-- Star Ratings -->
+                        <div class="bg-amber-50 rounded-xl p-4 space-y-3">
+                            <p class="text-sm font-bold text-gray-700 mb-2">⭐ Rate Your Experience</p>
+                            <div id="starRatings" class="space-y-3">
+                                <div class="star-row flex items-center justify-between" data-field="food_drink">
+                                    <span class="text-sm font-medium text-gray-700 w-36">🍽️ Food & Drink</span>
+                                    <div class="flex gap-1" id="stars-food_drink">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span>
+                                        <span class="star-btn text-2xl" data-val="2">☆</span>
+                                        <span class="star-btn text-2xl" data-val="3">☆</span>
+                                        <span class="star-btn text-2xl" data-val="4">☆</span>
+                                        <span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs text-gray-400 w-6 text-right" id="val-food_drink">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="location_venue">
+                                    <span class="text-sm font-medium text-gray-700 w-36">📍 Location/Venue</span>
+                                    <div class="flex gap-1" id="stars-location_venue">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span>
+                                        <span class="star-btn text-2xl" data-val="2">☆</span>
+                                        <span class="star-btn text-2xl" data-val="3">☆</span>
+                                        <span class="star-btn text-2xl" data-val="4">☆</span>
+                                        <span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs text-gray-400 w-6 text-right" id="val-location_venue">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="atmosphere">
+                                    <span class="text-sm font-medium text-gray-700 w-36">🎭 Atmosphere</span>
+                                    <div class="flex gap-1" id="stars-atmosphere">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span>
+                                        <span class="star-btn text-2xl" data-val="2">☆</span>
+                                        <span class="star-btn text-2xl" data-val="3">☆</span>
+                                        <span class="star-btn text-2xl" data-val="4">☆</span>
+                                        <span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs text-gray-400 w-6 text-right" id="val-atmosphere">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="recommend">
+                                    <span class="text-sm font-medium text-gray-700 w-36">👍 Recommend</span>
+                                    <div class="flex gap-1" id="stars-recommend">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span>
+                                        <span class="star-btn text-2xl" data-val="2">☆</span>
+                                        <span class="star-btn text-2xl" data-val="3">☆</span>
+                                        <span class="star-btn text-2xl" data-val="4">☆</span>
+                                        <span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs text-gray-400 w-6 text-right" id="val-recommend">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="enjoyment">
+                                    <span class="text-sm font-medium text-gray-700 w-36">😄 Enjoyment</span>
+                                    <div class="flex gap-1" id="stars-enjoyment">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span>
+                                        <span class="star-btn text-2xl" data-val="2">☆</span>
+                                        <span class="star-btn text-2xl" data-val="3">☆</span>
+                                        <span class="star-btn text-2xl" data-val="4">☆</span>
+                                        <span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs text-gray-400 w-6 text-right" id="val-enjoyment">0</span>
+                                </div>
+                            </div>
+                            <div class="border-t border-amber-200 pt-3 mt-2 flex items-center justify-between">
+                                <span class="text-sm font-bold text-gray-700">Total Score</span>
+                                <span id="totalScore" class="text-2xl font-black text-amber-600">0 <span class="text-sm text-gray-400 font-normal">/ 25</span></span>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-95">
+                            🚀 Submit Experience
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="lg:col-span-3">
+                <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+ 
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span class="bg-blue-100 text-blue-600 p-2 rounded-xl">📋</span>
+                            All Experiences
+                        </h2>
+                        <span id="expCount" class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">0 entries</span>
+                    </div>
+                    <div id="logTableContainer" class="overflow-x-auto">
+                        <div id="logTableEmpty" class="text-center py-16 text-gray-400">
+                            <div class="text-5xl mb-3">📭</div>
+                            <p class="font-medium">No experiences logged yet</p>
+                            <p class="text-sm">Fill out the form to get started!</p>
+                        </div>
+                        <table id="logTable" class="w-full text-sm hidden">
+                            <thead>
+                                <tr class="text-left text-xs text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                                    <th class="pb-3 font-semibold">Name</th>
+                                    <th class="pb-3 font-semibold">Date</th>
+                                    <th class="pb-3 font-semibold">Category</th>
+                                    <th class="pb-3 font-semibold">Organiser</th>
+                                    <th class="pb-3 font-semibold text-center">Score</th>
+                                    <th class="pb-3 font-semibold text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logTableBody"></tbody>
+                        </table>
+ 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: LEAGUE TABLE -->
+    <div id="panel-league" class="tab-panel hidden">
+        <div class="space-y-6">
+            <!-- Experience League -->
+            <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+ 
+                <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
+                    <span class="bg-yellow-100 text-yellow-600 p-2 rounded-xl">🏆</span>
+                    Experience League Table
+                </h2>
+                <div id="leagueTable" class="space-y-3">
+                    <div class="text-center py-10 text-gray-400"><div class="text-4xl mb-2">🏆</div><p>No data yet</p></div>
+                </div>
+            </div>
+            <!-- Organiser League -->
+            <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+ 
+                <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-600 p-2 rounded-xl">👑</span>
+                    Organiser League
+                </h2>
+                <div id="organiserLeague" class="space-y-3">
+                    <div class="text-center py-10 text-gray-400"><div class="text-4xl mb-2">👑</div><p>No data yet</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: SUGGESTIONS -->
+    <div id="panel-suggestions" class="tab-panel hidden">
+        <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+ 
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <span class="bg-green-100 text-green-600 p-2 rounded-xl">💡</span>
+                    Smart Suggestions
+                </h2>
+                <button onclick="renderSuggestions()" class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all active:scale-95">
+                    🔄 Refresh Analysis
+                </button>
+            </div>
+            <div id="suggestionsContent">
+                <div class="text-center py-16 text-gray-400"><div class="text-5xl mb-3">💡</div><p>Loading suggestions...</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: IDEA BOARD -->
+    <div id="panel-ideas" class="tab-panel hidden">
+        <div class="space-y-6">
+            <!-- Add Idea Form -->
+            <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+                <h2 class="text-lg font-bold text-slate-800 mb-5 flex items-center gap-2">
+                    <span class="bg-violet-100 text-violet-600 p-2 rounded-xl">💡</span>
+                    Add New Idea
+                </h2>
+                <form id="ideaForm" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">Idea Name *</label>
+                        <input type="text" id="idea_name" required placeholder="e.g. Hot air balloon ride"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">Category *</label>
+                        <select id="idea_category" required
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition bg-white">
+                            <option value="">Select...</option>
+                            <option value="Date Night">🌹 Date Night</option>
+                            <option value="Day Activity">☀️ Day Activity</option>
+                            <option value="Sports">⚽ Sports</option>
+                            <option value="Holiday Related">✈️ Holiday Related</option>
+                            <option value="Other">✨ Other</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">Notes</label>
+                        <input type="text" id="idea_notes" placeholder="Details, links, ideas..."
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition"/>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-bold py-2.5 rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-95 text-sm">
+                            ➕ Add Idea
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Priority Board -->
+            <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <span class="bg-indigo-100 text-indigo-600 p-2 rounded-xl">🎯</span>
+                        Priority Board
+                        <span id="ideaActiveCount" class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-full ml-1">0 ideas</span>
+                    </h2>
+                    <p class="text-xs text-gray-400 hidden md:block">Drag cards to reorder priority</p>
+                </div>
+                <div id="ideaBoardEmpty" class="text-center py-16 text-gray-400">
+                    <div class="text-5xl mb-3">🗒️</div>
+                    <p class="font-medium">No ideas yet</p>
+                    <p class="text-sm">Add your first idea above!</p>
+                </div>
+                <div id="ideaBoard" class="space-y-2"></div>
+            </div>
+
+            <!-- Completed Ideas -->
+            <div class="panel-glass rounded-2xl shadow-lg border border-white/60 overflow-hidden">
+                <button onclick="toggleCompletedSection()" class="w-full flex items-center justify-between p-5 hover:bg-white/40 transition-colors">
+                    <h2 class="text-base font-bold text-slate-700 flex items-center gap-2">
+                        <span class="bg-green-100 text-green-600 p-1.5 rounded-lg text-sm">✅</span>
+                        Completed Ideas
+                        <span id="ideaDoneCount" class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded-full">0 done</span>
+                    </h2>
+                    <span id="completedChevron" class="text-gray-400 text-lg transition-transform">▼</span>
+                </button>
+                <div id="completedSection">
+                    <div class="px-6 pb-5">
+                        <div id="completedBoardEmpty" class="text-center py-8 text-gray-400">
+                            <p class="text-sm">No completed ideas yet.</p>
+                        </div>
+                        <div id="completedBoard" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: ANALYTICS -->
+    <div id="panel-analytics" class="tab-panel hidden">
+        <div class="space-y-6">
+            <!-- Stats Row -->
+            <div id="statsCards" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+            <!-- Charts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="text-xl">📊</span> Avg Score by Metric
+                    </h3>
+                    <div id="metricBars" class="space-y-3"></div>
+                </div>
+                <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="text-xl">📂</span> Avg Score by Category
+                    </h3>
+                    <div id="categoryBars" class="space-y-3"></div>
+                </div>
+            </div>
+            <!-- Score Distribution -->
+            <div class="panel-glass rounded-2xl shadow-lg p-6 border border-white/60">
+ 
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="text-xl">📈</span> Score Distribution
+                </h3>
+                <div id="scoreDistribution" class="grid grid-cols-5 md:grid-cols-10 gap-2"></div>
+            </div>
+            <!-- Top Rated -->
+            <div id="topRatedBox"></div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+/*
+-- Run this SQL in your Supabase SQL editor to create the ideas table:
+CREATE TABLE ideas (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT,
+  notes TEXT,
+  priority_order INT,
+  status TEXT DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT NOW(),
+  completed_at TIMESTAMP
+);
+ALTER TABLE ideas ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all" ON ideas FOR ALL USING (true) WITH CHECK (true);
+*/
+
+const SUPABASE_URL = 'https://mrosmzlofnsmwrrbqdwp.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yb3NtemxvZm5zbXdycmJxZHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2OTU5MTEsImV4cCI6MjA5NzI3MTkxMX0.LiFmzA9ZuuXTM8MGZwaI4izDguT1BUCgTY25GElKsHQ';
+const BASE_URL = `${SUPABASE_URL}/rest/v1/experiences`;
+const HEADERS = {
+    'apikey': ANON_KEY,
+    'Authorization': `Bearer ${ANON_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+};
+
+let experiences = [];
+let ratings = { food_drink: 0, location_venue: 0, atmosphere: 0, recommend: 0, enjoyment: 0 };
+let editRatings = { food_drink: 0, location_venue: 0, atmosphere: 0, recommend: 0, enjoyment: 0 };
+let currentTab = 'log';
+let ideas = [];
+let dragSrcIndex = null;
+ 
+
+const ALL_CATEGORIES = ['Date Night', 'Day Activity', 'Sports', 'Holiday Related', 'Other'];
+const CAT_COLORS = {
+    'Date Night': 'bg-pink-100 text-pink-700',
+    'Day Activity': 'bg-sky-100 text-sky-700',
+    'Sports': 'bg-green-100 text-green-700',
+    'Holiday Related': 'bg-orange-100 text-orange-700',
+    'Other': 'bg-purple-100 text-purple-700'
+};
+const CAT_BORDER_COLORS = {
+    'Date Night': 'border-pink-400',
+    'Day Activity': 'border-sky-400',
+    'Sports': 'border-green-400',
+    'Holiday Related': 'border-orange-400',
+    'Other': 'border-purple-400'
+};
+const CAT_EMOJIS = {
+    'Date Night': '🌹',
+    'Day Activity': '☀️',
+    'Sports': '⚽',
+    'Holiday Related': '✈️',
+    'Other': '✨'
+};
+
+// ─── Loading & Toast ───────────────────────────────────────────────────────────
+function showLoading() { document.getElementById('loadingOverlay').classList.remove('hidden'); }
+function hideLoading() { document.getElementById('loadingOverlay').classList.add('hidden'); }
+
+function showToast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    const bg = type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500';
+    t.className = `toast ${bg} text-white px-5 py-3 rounded-xl shadow-xl text-sm font-semibold flex items-center gap-2 max-w-xs`;
+    t.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+}
+
+// ─── Supabase Calls ────────────────────────────────────────────────────────────
+async function fetchAll() {
+    showLoading();
+    try {
+        const res = await fetch(`${BASE_URL}?order=created_at.desc`, { headers: HEADERS });
+        if (!res.ok) throw new Error(await res.text());
+        experiences = await res.json();
+        updateAll();
+    } catch (e) {
+        showToast('Failed to load data: ' + e.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+async function postExperience(data) {
+    const res = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+async function deleteExperience(id) {
+    const res = await fetch(`${BASE_URL}?id=eq.${id}`, {
+        method: 'DELETE',
+        headers: HEADERS
+    });
+    if (!res.ok) throw new Error(await res.text());
+}
+
+async function patchExperience(id, data) {
+    const res = await fetch(`${BASE_URL}?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: HEADERS,
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+// ─── Ideas Supabase ────────────────────────────────────────────────────────────
+const IDEAS_URL = `${SUPABASE_URL}/rest/v1/ideas`;
+
+async function fetchIdeas() {
+    const res = await fetch(`${IDEAS_URL}?order=priority_order.asc,created_at.asc`, { headers: HEADERS });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+async function postIdea(data) {
+    const res = await fetch(IDEAS_URL, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+async function patchIdea(id, data) {
+    const res = await fetch(`${IDEAS_URL}?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: HEADERS,
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+async function deleteIdea(id) {
+    const res = await fetch(`${IDEAS_URL}?id=eq.${id}`, {
+        method: 'DELETE',
+        headers: HEADERS
+    });
+    if (!res.ok) throw new Error(await res.text());
+}
+ 
+
+// ─── Stars ─────────────────────────────────────────────────────────────────────
+function initStars() {
+    // Main form stars
+    Object.keys(ratings).forEach(field => {
+        const container = document.getElementById(`stars-${field}`);
+        if (!container) return;
+        container.querySelectorAll('.star-btn').forEach(star => {
+            star.addEventListener('click', () => setRating(field, parseInt(star.dataset.val)));
+            star.addEventListener('mouseenter', () => highlightStars(`stars-${field}`, parseInt(star.dataset.val), true));
+            star.addEventListener('mouseleave', () => highlightStars(`stars-${field}`, ratings[field], false));
+        });
+    });
+    // Edit modal stars
+    Object.keys(editRatings).forEach(field => {
+        const container = document.getElementById(`estars-${field}`);
+        if (!container) return;
+        container.querySelectorAll('.star-btn').forEach(star => {
+            star.addEventListener('click', () => setEditRating(field, parseInt(star.dataset.val)));
+            star.addEventListener('mouseenter', () => highlightStars(`estars-${field}`, parseInt(star.dataset.val), true));
+            star.addEventListener('mouseleave', () => highlightStars(`estars-${field}`, editRatings[field], false));
+        });
+    });
+}
+
+function setRating(field, val) {
+    ratings[field] = val;
+    highlightStars(`stars-${field}`, val, false);
+    document.getElementById(`val-${field}`).textContent = val;
+    updateTotal();
+}
+
+function setEditRating(field, val) {
+    editRatings[field] = val;
+    highlightStars(`estars-${field}`, val, false);
+    document.getElementById(`eval-${field}`).textContent = val;
+    updateEditTotal();
+}
+
+function highlightStars(containerId, val, hover) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.querySelectorAll('.star-btn').forEach(star => {
+        const sv = parseInt(star.dataset.val);
+        if (sv <= val) {
+            star.textContent = '★';
+            star.style.color = hover ? '#fbbf24' : '#f59e0b';
+        } else {
+            star.textContent = '☆';
+            star.style.color = '#d1d5db';
+        }
+    });
+}
+
+function updateTotal() {
+    const sum = Object.values(ratings).reduce((a, b) => a + b, 0);
+    document.getElementById('totalScore').innerHTML = `${sum} <span class="text-sm text-gray-400 font-normal">/ 25</span>`;
+}
+
+function updateEditTotal() {
+    const sum = Object.values(editRatings).reduce((a, b) => a + b, 0);
+    document.getElementById('editTotalScore').innerHTML = `${sum} <span class="text-sm text-gray-400 font-normal">/ 25</span>`;
+}
+
+function resetStars() {
+    Object.keys(ratings).forEach(field => {
+        ratings[field] = 0;
+        highlightStars(`stars-${field}`, 0, false);
+        document.getElementById(`val-${field}`).textContent = '0';
+    });
+    updateTotal();
+}
+
+// ─── Edit Modal ───────────────────────────────────────────────────────────────
+function openEditModal(exp) {
+    document.getElementById('e_id').value = exp.id;
+    document.getElementById('e_name').value = exp.name || '';
+    document.getElementById('e_date').value = exp.date || '';
+    document.getElementById('e_category').value = exp.category || '';
+    document.getElementById('e_organiser').value = exp.organiser || '';
+    document.getElementById('e_notes').value = exp.notes || '';
+
+    // Set edit ratings
+    const fields = ['food_drink','location_venue','atmosphere','recommend','enjoyment'];
+    fields.forEach(field => {
+        const val = exp[field] || 0;
+        editRatings[field] = val;
+        highlightStars(`estars-${field}`, val, false);
+        document.getElementById(`eval-${field}`).textContent = val;
+    });
+    updateEditTotal();
+
+    const modal = document.getElementById('editModal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeEditModal() {
+    const modal = document.getElementById('editModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('editForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ratingVals = Object.values(editRatings);
+    if (ratingVals.some(v => v === 0)) {
+        showToast('Please rate all 5 categories!', 'error');
+        return;
+    }
+    const total = ratingVals.reduce((a, b) => a + b, 0);
+    const id = document.getElementById('e_id').value;
+    const data = {
+        name: document.getElementById('e_name').value.trim(),
+        date: document.getElementById('e_date').value,
+        category: document.getElementById('e_category').value,
+        organiser: document.getElementById('e_organiser').value.trim(),
+        notes: document.getElementById('e_notes').value.trim(),
+        food_drink: editRatings.food_drink,
+        location_venue: editRatings.location_venue,
+        atmosphere: editRatings.atmosphere,
+        recommend: editRatings.recommend,
+        enjoyment: editRatings.enjoyment,
+        total
+    };
+    showLoading();
+    try {
+        await patchExperience(id, data);
+        showToast('Experience updated! ✨', 'success');
+        closeEditModal();
+        await fetchAll();
+    } catch (err) {
+        showToast('Error updating: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+});
+ 
+
+// ─── Form Submit ───────────────────────────────────────────────────────────────
+document.getElementById('experienceForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ratingVals = Object.values(ratings);
+    if (ratingVals.some(v => v === 0)) {
+        showToast('Please rate all 5 categories!', 'error');
+        return;
+    }
+    const total = ratingVals.reduce((a, b) => a + b, 0);
+    const data = {
+        name: document.getElementById('f_name').value.trim(),
+        date: document.getElementById('f_date').value,
+        category: document.getElementById('f_category').value,
+        organiser: document.getElementById('f_organiser').value.trim(),
+        notes: document.getElementById('f_notes').value.trim(),
+        food_drink: ratings.food_drink,
+        location_venue: ratings.location_venue,
+        atmosphere: ratings.atmosphere,
+        recommend: ratings.recommend,
+        enjoyment: ratings.enjoyment,
+        total
+    };
+    showLoading();
+    try {
+        await postExperience(data);
+        showToast('Experience logged successfully! 🎉', 'success');
+        e.target.reset();
+        resetStars();
+        await fetchAll();
+    } catch (err) {
+        showToast('Error saving: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+});
+
+// ─── Delete ────────────────────────────────────────────────────────────────────
+async function handleDelete(id, name) {
+    if (!confirm(`Delete "${name}"?`)) return;
+    showLoading();
+    try {
+        await deleteExperience(id);
+        showToast('Deleted successfully', 'success');
+        await fetchAll();
+    } catch (err) {
+        showToast('Error deleting: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// ─── Render All ───────────────────────────────────────────────────────────────
+function updateAll() {
+    const count = experiences.length;
+    document.getElementById('expCount').textContent = `${count} entr${count === 1 ? 'y' : 'ies'}`;
+    document.getElementById('liveCount').textContent = `${count} experiences`;
+    document.getElementById('liveCount').classList.toggle('hidden', count === 0);
+    renderLogTable();
+    if (currentTab === 'league') renderLeague();
+    if (currentTab === 'suggestions') renderSuggestions();
+    if (currentTab === 'analytics') renderAnalytics();
+}
+
+// ─── Mini score breakdown HTML helper ─────────────────────────────────────────
+function miniScoreBreakdown(exp) {
+    const metrics = [
+        { key: 'food_drink',     label: '🍽️', title: 'Food & Drink' },
+        { key: 'location_venue', label: '📍', title: 'Location/Venue' },
+        { key: 'atmosphere',     label: '🎭', title: 'Atmosphere' },
+        { key: 'recommend',      label: '👍', title: 'Recommend' },
+        { key: 'enjoyment',      label: '😄', title: 'Enjoyment' }
+    ];
+    return `<div class="flex flex-wrap gap-2">
+        ${metrics.map(m => {
+            const val = exp[m.key] || 0;
+            const stars = '★'.repeat(val) + '☆'.repeat(5 - val);
+            const starColor = val >= 4 ? 'text-amber-400' : val >= 3 ? 'text-yellow-400' : 'text-gray-300';
+            return `<div class="flex flex-col items-center bg-white/80 rounded-lg px-2 py-1 border border-gray-100 min-w-[56px]">
+                <span class="text-base leading-none">${m.label}</span>
+                <span class="text-xs ${starColor} tracking-tighter leading-tight">${stars}</span>
+                <span class="text-xs font-bold text-gray-600">${val}/5</span>
+            </div>`;
+        }).join('')}
+    </div>`;
+}
+
+// ─── Log Table ─────────────────────────────────────────────────────────────────
+function renderLogTable() {
+    const empty = document.getElementById('logTableEmpty');
+    const table = document.getElementById('logTable');
+    const tbody = document.getElementById('logTableBody');
+    if (experiences.length === 0) {
+        empty.classList.remove('hidden');
+        table.classList.add('hidden');
+        return;
+    }
+    empty.classList.add('hidden');
+    table.classList.remove('hidden');
+    tbody.innerHTML = experiences.map(exp => {
+        const catClass = CAT_COLORS[exp.category] || 'bg-gray-100 text-gray-600';
+        const catEmoji = CAT_EMOJIS[exp.category] || '✨';
+        const scoreColor = exp.total >= 20 ? 'text-green-600' : exp.total >= 14 ? 'text-amber-500' : 'text-red-500';
+        const dateStr = exp.date ? new Date(exp.date).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+        const safeId = exp.id;
+        const safeName = escHtml(exp.name).replace(/'/g, '&#039;');
+        return `<tr class="border-b border-gray-50 hover:bg-blue-50/30 transition-colors cursor-pointer" onclick="toggleBreakdown('${safeId}')">
+            <td class="py-3 pr-2">
+                <div class="font-semibold text-gray-800 text-sm flex items-center gap-1">
+                    ${escHtml(exp.name)}
+                    <span class="text-gray-300 text-xs">▾</span>
+                </div>
+                ${exp.notes ? `<div class="text-xs text-gray-400 truncate max-w-[140px]">${escHtml(exp.notes)}</div>` : ''}
+            </td>
+            <td class="py-3 pr-2 text-xs text-gray-500 whitespace-nowrap">${dateStr}</td>
+            <td class="py-3 pr-2"><span class="text-xs font-semibold px-2 py-1 rounded-full ${catClass}">${catEmoji} ${escHtml(exp.category)}</span></td>
+            <td class="py-3 pr-2 text-xs text-gray-600">${escHtml(exp.organiser)}</td>
+            <td class="py-3 text-center"><span class="font-black text-lg ${scoreColor}">${exp.total}</span><span class="text-xs text-gray-400">/25</span></td>
+            <td class="py-3 text-center" onclick="event.stopPropagation()">
+                <div class="flex items-center justify-center gap-1">
+                    <button onclick="openEditModal(${JSON.stringify(exp).replace(/"/g,'&quot;')})"
+                        class="text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 p-1.5 rounded-lg transition-colors text-sm" title="Edit">✏️</button>
+                    <button onclick="handleDelete('${safeId}', '${safeName}')"
+                        class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors text-sm" title="Delete">🗑️</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="breakdown-${safeId}" class="breakdown-row border-b border-gray-100 bg-blue-50/40">
+            <td colspan="6" class="px-4 pb-3 pt-1">
+                <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Score Breakdown</div>
+                ${miniScoreBreakdown(exp)}
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function toggleBreakdown(id) {
+    const row = document.getElementById(`breakdown-${id}`);
+    if (!row) return;
+    row.classList.toggle('open');
+}
+ 
+
+// ─── League score breakdown bars helper ───────────────────────────────────────
+function leagueBreakdownBars(exp) {
+    const metrics = [
+        { key: 'food_drink',     label: '🍽️ Food' },
+        { key: 'location_venue', label: '📍 Venue' },
+        { key: 'atmosphere',     label: '🎭 Atmos.' },
+        { key: 'recommend',      label: '👍 Rec.' },
+        { key: 'enjoyment',      label: '😄 Enjoy' }
+    ];
+    const barColors = ['bg-pink-400','bg-blue-400','bg-purple-400','bg-green-400','bg-amber-400'];
+    return `<div class="mt-3 pt-3 border-t border-gray-200/60 grid grid-cols-5 gap-1">
+        ${metrics.map((m, i) => {
+            const val = exp[m.key] || 0;
+            const pct = (val / 5) * 100;
+            return `<div class="flex flex-col items-center gap-1">
+                <div class="text-xs text-gray-500 text-center leading-tight font-medium">${m.label}</div>
+                <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                    <div class="${barColors[i]} h-2 rounded-full score-bar" style="width:${pct}%"></div>
+                </div>
+                <div class="text-xs font-bold text-gray-600">${val}/5</div>
+            </div>`;
+        }).join('')}
+    </div>`;
+}
+
+// ─── League Table ─────────────────────────────────────────────────────────────
+function renderLeague() {
+    const container = document.getElementById('leagueTable');
+    if (experiences.length === 0) {
+        container.innerHTML = '<div class="text-center py-10 text-gray-400"><div class="text-4xl mb-2">🏆</div><p>No data yet</p></div>';
+        return;
+    }
+    const sorted = [...experiences].sort((a, b) => b.total - a.total);
+    const medals = ['🥇', '🥈', '🥉'];
+    container.innerHTML = sorted.map((exp, i) => {
+        const medal = medals[i] || `<span class="text-gray-400 font-bold text-sm">#${i+1}</span>`;
+        const pct = (exp.total / 25) * 100;
+        const barColor = exp.total >= 20 ? 'bg-green-500' : exp.total >= 14 ? 'bg-amber-400' : 'bg-red-400';
+        const catClass = CAT_COLORS[exp.category] || 'bg-gray-100 text-gray-600';
+        const catEmoji = CAT_EMOJIS[exp.category] || '✨';
+        const dateStr = exp.date ? new Date(exp.date).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '';
+        return `<div class="card-hover rounded-xl border border-gray-100 bg-white/70 hover:bg-white transition-all p-4">
+            <div class="flex items-center gap-4">
+                <div class="text-2xl w-10 text-center flex-shrink-0">${medal}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1 flex-wrap">
+                        <span class="font-bold text-gray-800">${escHtml(exp.name)}</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${catClass}">${catEmoji} ${escHtml(exp.category)}</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-gray-500 mb-2">
+                        <span>👤 ${escHtml(exp.organiser)}</span>
+                        ${dateStr ? `<span>📅 ${dateStr}</span>` : ''}
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                            <div class="score-bar ${barColor} h-2 rounded-full" style="width: ${pct}%"></div>
+                        </div>
+                        <span class="font-black text-sm text-gray-700 w-12 text-right">${exp.total}<span class="font-normal text-gray-400">/25</span></span>
+                    </div>
+                </div>
+            </div>
+            ${leagueBreakdownBars(exp)}
+        </div>`;
+    }).join('');
+ 
+
+    // Organiser League
+    const orgMap = {};
+    experiences.forEach(exp => {
+        if (!orgMap[exp.organiser]) orgMap[exp.organiser] = { total: 0, count: 0 };
+        orgMap[exp.organiser].total += exp.total;
+        orgMap[exp.organiser].count++;
+    });
+    const orgSorted = Object.entries(orgMap)
+        .map(([name, d]) => ({ name, avg: d.total / d.count, count: d.count, total: d.total }))
+        .sort((a, b) => b.avg - a.avg);
+
+    const orgContainer = document.getElementById('organiserLeague');
+    const orgMedals = ['🥇', '🥈', '🥉'];
+    const orgColors = ['bg-yellow-50 border-yellow-200', 'bg-gray-50 border-gray-200', 'bg-orange-50 border-orange-200'];
+    orgContainer.innerHTML = orgSorted.map((org, i) => {
+        const medal = orgMedals[i] || `<span class="text-gray-400 font-bold">#${i+1}</span>`;
+        const bg = orgColors[i] || 'bg-white border-gray-100';
+        const pct = (org.avg / 25) * 100;
+        return `<div class="card-hover flex items-center gap-4 p-4 rounded-xl border ${bg}">
+            <div class="text-2xl w-10 text-center flex-shrink-0">${medal}</div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-bold text-gray-800 text-base">${escHtml(org.name)}</span>
+                    <div class="text-right">
+                        <div class="font-black text-lg text-indigo-600">${org.avg.toFixed(1)}<span class="text-sm font-normal text-gray-400">/25</span></div>
+                        <div class="text-xs text-gray-400">${org.count} event${org.count > 1 ? 's' : ''}</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div class="score-bar bg-indigo-500 h-2 rounded-full" style="width: ${pct}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ─── Suggestions ──────────────────────────────────────────────────────────────
+function renderSuggestions() {
+    const container = document.getElementById('suggestionsContent');
+    if (experiences.length === 0) {
+        container.innerHTML = `<div class="text-center py-16 text-gray-400"><div class="text-5xl mb-3">💡</div><p class="font-medium">Log some experiences first to get suggestions!</p></div>`;
+        return;
+    }
+
+    const cards = [];
+    const catStats = {};
+    ALL_CATEGORIES.forEach(c => catStats[c] = { count: 0, totalScore: 0 });
+    experiences.forEach(exp => {
+        if (catStats[exp.category]) {
+            catStats[exp.category].count++;
+            catStats[exp.category].totalScore += exp.total;
+        }
+    });
+
+    // Not tried
+    const notTried = ALL_CATEGORIES.filter(c => catStats[c].count === 0);
+    notTried.forEach(cat => {
+        cards.push({
+            type: 'not_tried',
+            category: cat,
+            label: '🆕 Never Tried',
+            labelColor: 'bg-blue-100 text-blue-700',
+            title: `Explore ${cat}`,
+            desc: `You haven't tried any ${cat.toLowerCase()} experiences yet! Time to discover something new.`,
+            suggestions: getSuggestions(cat),
+            border: 'border-blue-200 bg-blue-50'
+        });
+    });
+
+    // Tried only once
+    const onlyOnce = ALL_CATEGORIES.filter(c => catStats[c].count === 1);
+    onlyOnce.forEach(cat => {
+        cards.push({
+            type: 'once',
+            category: cat,
+            label: '🔁 Try Again',
+            labelColor: 'bg-purple-100 text-purple-700',
+            title: `More ${cat} Experiences`,
+            desc: `You've only tried ${cat.toLowerCase()} once. Why not explore more options in this category?`,
+            suggestions: getSuggestions(cat),
+            border: 'border-purple-200 bg-purple-50'
+        });
+    });
+
+    // Low average score
+    const lowAvg = ALL_CATEGORIES.filter(c => catStats[c].count >= 2 && (catStats[c].totalScore / catStats[c].count) < 14);
+    lowAvg.forEach(cat => {
+        const avg = (catStats[cat].totalScore / catStats[cat].count).toFixed(1);
+        cards.push({
+            type: 'low',
+            category: cat,
+            label: '⚠️ Needs Improvement',
+            labelColor: 'bg-amber-100 text-amber-700',
+            title: `Better ${cat} Options`,
+            desc: `Your average score for ${cat.toLowerCase()} is only ${avg}/25. Try these alternatives for a better experience!`,
+            suggestions: getSuggestions(cat),
+            border: 'border-amber-200 bg-amber-50'
+        });
+    });
+
+    if (cards.length === 0) {
+        container.innerHTML = `<div class="text-center py-16 text-gray-400">
+            <div class="text-5xl mb-3">🎉</div>
+            <p class="font-bold text-gray-700 text-lg">You're doing great!</p>
+            <p class="text-sm mt-1">You've explored all categories with good scores. Keep it up!</p>
+        </div>`;
+        return;
+    }
+
+    container.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        ${cards.map(card => `
+        <div class="card-hover rounded-2xl border-2 p-5 ${card.border}">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-bold px-2.5 py-1 rounded-full ${card.labelColor}">${card.label}</span>
+                <span class="text-xl">${CAT_EMOJIS[card.category] || '✨'}</span>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base mb-1">${card.title}</h3>
+            <p class="text-xs text-gray-500 mb-4">${card.desc}</p>
+            <div class="space-y-2 mb-4">
+                ${card.suggestions.map(s => `<div class="flex items-center gap-2 text-sm text-gray-700">
+                    <span class="text-green-500">→</span> ${s}
+                </div>`).join('')}
+            </div>
+            <button onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(card.category + ' things to do experiences near me')}', '_blank')"
+                class="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 text-sm font-semibold py-2 rounded-xl transition-all hover:shadow flex items-center justify-center gap-2">
+                🔍 Search Online
+            </button>
+        </div>`).join('')}
+    </div>`;
+}
+
+function getSuggestions(category) {
+    const s = {
+        'Date Night': ['Rooftop dining experience', 'Cocktail masterclass', 'Private cinema screening', 'Sunset boat trip', 'Cooking class for two'],
+        'Day Activity': ['Pottery workshop', 'Botanical garden visit', 'Escape room challenge', 'Kayaking adventure', 'Food market tour'],
+        'Sports': ['Go-karting session', 'Bouldering gym visit', 'Tennis coaching', 'Paddleboarding lesson', 'Archery experience'],
+        'Holiday Related': ['City break weekend', 'Glamping getaway', 'Road trip to countryside', 'Beach holiday', 'Cultural city tour'],
+        'Other': ['Stand-up comedy show', 'Live music gig', 'Museum late night event', 'Photography walk', 'Pottery class']
+    };
+    return (s[category] || ['Explore local options', 'Check event listings', 'Ask friends for tips']).slice(0, 3);
+}
+
+// ─── Analytics ────────────────────────────────────────────────────────────────
+function renderAnalytics() {
+    if (experiences.length === 0) {
+        ['statsCards','metricBars','categoryBars','scoreDistribution','topRatedBox'].forEach(id => {
+            document.getElementById(id).innerHTML = '';
+        });
+        document.getElementById('statsCards').innerHTML = `<div class="col-span-4 text-center py-10 text-gray-400"><div class="text-4xl mb-2">📊</div><p>Log some experiences to see analytics!</p></div>`;
+        return;
+    }
+
+    const totals = experiences.map(e => e.total);
+    const avgTotal = totals.reduce((a,b)=>a+b,0)/totals.length;
+    const maxExp = experiences.reduce((a,b)=>b.total>a.total?b:a, experiences[0]);
+
+    // Organiser most active
+    const orgCount = {};
+    experiences.forEach(e => { orgCount[e.organiser] = (orgCount[e.organiser]||0)+1; });
+    const topOrg = Object.entries(orgCount).sort((a,b)=>b[1]-a[1])[0];
+
+    // Stats Cards
+    document.getElementById('statsCards').innerHTML = [
+        { icon:'🎯', label:'Total Experiences', val: experiences.length, color:'bg-blue-500' },
+        { icon:'⭐', label:'Avg Score', val: avgTotal.toFixed(1)+'/25', color:'bg-amber-500' },
+        { icon:'🏆', label:'Top Score', val: maxExp.total+'/25', color:'bg-green-500' },
+        { icon:'👑', label:'Top Organiser', val: topOrg ? topOrg[0] : '—', color:'bg-purple-500' }
+    ].map(s => `<div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 card-hover">
+        <div class="${s.color} text-white w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3">${s.icon}</div>
+        <div class="text-2xl font-black text-gray-800 mb-1">${s.val}</div>
+        <div class="text-xs text-gray-500 font-medium">${s.label}</div>
+    </div>`).join('');
+
+    // Metric Bars
+    const metrics = [
+        { key:'food_drink', label:'🍽️ Food & Drink' },
+        { key:'location_venue', label:'📍 Location/Venue' },
+        { key:'atmosphere', label:'🎭 Atmosphere' },
+        { key:'recommend', label:'👍 Recommend' },
+        { key:'enjoyment', label:'😄 Enjoyment' }
+    ];
+    const metricColors = ['bg-pink-500','bg-blue-500','bg-purple-500','bg-green-500','bg-amber-500'];
+    document.getElementById('metricBars').innerHTML = metrics.map((m, i) => {
+        const avg = experiences.reduce((s,e)=>s+(e[m.key]||0),0)/experiences.length;
+        const pct = (avg/5)*100;
+        return `<div>
+            <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-600 font-medium">${m.label}</span>
+                <span class="font-bold text-gray-800">${avg.toFixed(1)}/5</span>
+            </div>
+            <div class="bg-gray-100 rounded-full h-3 overflow-hidden">
+                <div class="score-bar ${metricColors[i]} h-3 rounded-full" style="width:${pct}%"></div>
+            </div>
+        </div>`;
+    }).join('');
+
+    // Category Bars
+    const catAvgs = {};
+    const catCounts = {};
+    experiences.forEach(e => {
+        catAvgs[e.category] = (catAvgs[e.category]||0) + e.total;
+        catCounts[e.category] = (catCounts[e.category]||0)+1;
+    });
+    const catColors = ['bg-pink-400','bg-sky-400','bg-green-400','bg-orange-400','bg-violet-400'];
+    document.getElementById('categoryBars').innerHTML = Object.entries(catAvgs).map(([cat, sum], i) => {
+        const avg = sum / catCounts[cat];
+        const pct = (avg/25)*100;
+        return `<div>
+            <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-600 font-medium">${CAT_EMOJIS[cat]||''} ${cat}</span>
+                <span class="font-bold text-gray-800">${avg.toFixed(1)}/25</span>
+            </div>
+            <div class="bg-gray-100 rounded-full h-3 overflow-hidden">
+                <div class="score-bar ${catColors[i%catColors.length]} h-3 rounded-full" style="width:${pct}%"></div>
+            </div>
+        </div>`;
+    }).join('') || '<p class="text-gray-400 text-sm">No data</p>';
+
+    // Score Distribution
+    const buckets = Array.from({length:25}, (_,i)=>i+1);
+    const distCounts = {};
+    totals.forEach(t => distCounts[t] = (distCounts[t]||0)+1);
+    const maxBucket = Math.max(...Object.values(distCounts), 1);
+    document.getElementById('scoreDistribution').innerHTML = buckets.map(score => {
+        const count = distCounts[score]||0;
+        const h = count ? Math.max(8, (count/maxBucket)*80) : 4;
+        const active = count > 0;
+        return `<div class="flex flex-col items-center gap-1 group">
+            <div class="text-xs font-bold text-gray-500 group-hover:text-blue-500 transition-colors">${count||''}</div>
+            <div class="w-full rounded-t flex items-end justify-center" style="height:80px">
+                <div class="${active?'bg-blue-500 hover:bg-blue-600':'bg-gray-100'} w-full rounded transition-all" style="height:${h}px"></div>
+            </div>
+            <div class="text-xs text-gray-400">${score}</div>
+        </div>`;
+    }).join('');
+
+    // Top Rated Box
+    document.getElementById('topRatedBox').innerHTML = `<div class="bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl p-6 text-white shadow-xl card-hover">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">🏆</span>
+            <div>
+                <p class="text-xs font-semibold opacity-80 uppercase tracking-wider">Top Rated Experience</p>
+                <h3 class="text-xl font-black">${escHtml(maxExp.name)}</h3>
+            </div>
+            <div class="ml-auto text-right">
+                <div class="text-4xl font-black">${maxExp.total}</div>
+                <div class="text-xs opacity-80">out of 25</div>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-3 text-sm opacity-90">
+            <span>📂 ${escHtml(maxExp.category)}</span>
+            <span>👤 ${escHtml(maxExp.organiser)}</span>
+            ${maxExp.date ? `<span>📅 ${new Date(maxExp.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}
+        </div>
+    </div>`;
+}
+
+// ─── Idea Board ────────────────────────────────────────────────────────────────
+function timeAgo(dateStr) {
+    if (!dateStr) return '';
+    const now = new Date();
+    const then = new Date(dateStr);
+    const diffMs = now - then;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    if (diffDays < 1) return 'Today';
+    if (diffDays === 1) return '1 day ago';
+    if (diffDays < 14) return `${diffDays} days ago`;
+    if (diffDays < 56) {
+        const weeks = Math.floor(diffDays / 7);
+        return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+    }
+    const months = Math.floor(diffDays / 30);
+    return `${months} month${months > 1 ? 's' : ''} ago`;
+}
+
+function timeAgoColor(dateStr) {
+    if (!dateStr) return 'text-gray-400';
+    const diffDays = Math.floor((new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24));
+    if (diffDays < 14) return 'text-green-600';
+    if (diffDays < 56) return 'text-amber-500';
+    return 'text-red-500';
+}
+
+function renderIdeaBoard() {
+    const activeIdeas = ideas.filter(i => i.status !== 'done').sort((a, b) => (a.priority_order ?? 999) - (b.priority_order ?? 999));
+    const doneIdeas = ideas.filter(i => i.status === 'done').sort((a, b) => new Date(b.completed_at || 0) - new Date(a.completed_at || 0));
+
+    // Counts
+    document.getElementById('ideaActiveCount').textContent = `${activeIdeas.length} idea${activeIdeas.length !== 1 ? 's' : ''}`;
+    document.getElementById('ideaDoneCount').textContent = `${doneIdeas.length} done`;
+
+    // Active board
+    const board = document.getElementById('ideaBoard');
+    const emptyEl = document.getElementById('ideaBoardEmpty');
+    if (activeIdeas.length === 0) {
+        emptyEl.classList.remove('hidden');
+        board.innerHTML = '';
+    } else {
+        emptyEl.classList.add('hidden');
+        board.innerHTML = activeIdeas.map((idea, idx) => {
+            const catClass = CAT_COLORS[idea.category] || 'bg-gray-100 text-gray-600';
+            const catEmoji = CAT_EMOJIS[idea.category] || '✨';
+            const borderClass = CAT_BORDER_COLORS[idea.category] || 'border-gray-300';
+            const taColor = timeAgoColor(idea.created_at);
+            const ta = timeAgo(idea.created_at);
+            const safeId = idea.id;
+            return `<div class="idea-card bg-white/80 hover:bg-white rounded-xl border-l-4 ${borderClass} border border-gray-100 px-4 py-3 flex items-center gap-3 group"
+                draggable="true"
+                data-id="${safeId}"
+                data-index="${idx}"
+                ondragstart="onIdeaDragStart(event, ${idx})"
+                ondragover="onIdeaDragOver(event)"
+                ondragleave="onIdeaDragLeave(event)"
+                ondrop="onIdeaDrop(event, ${idx})"
+                ondragend="onIdeaDragEnd(event)">
+                <div class="drag-handle text-gray-300 hover:text-gray-500 text-lg select-none flex-shrink-0" title="Drag to reorder">≡</div>
+                <div class="bg-indigo-100 text-indigo-700 text-xs font-black rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">${idx + 1}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-semibold text-gray-800 text-sm">${escHtml(idea.name)}</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${catClass}">${catEmoji} ${escHtml(idea.category)}</span>
+                    </div>
+                    ${idea.notes ? `<p class="text-xs text-gray-500 mt-0.5 truncate">${escHtml(idea.notes)}</p>` : ''}
+                    <div class="flex items-center gap-1 mt-1">
+                        <span class="text-xs">⏱️</span>
+                        <span class="text-xs font-medium ${taColor}">${ta}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onclick="handleMarkDone('${safeId}')"
+                        class="text-green-400 hover:text-green-600 hover:bg-green-50 p-1.5 rounded-lg transition-colors text-sm" title="Mark as Done">✅</button>
+                    <button onclick="handleDeleteIdea('${safeId}', '${escHtml(idea.name).replace(/'/g, "&#039;")}')"
+                        class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors text-sm" title="Delete">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // Completed board
+    const completedBoard = document.getElementById('completedBoard');
+    const completedEmpty = document.getElementById('completedBoardEmpty');
+    if (doneIdeas.length === 0) {
+        completedEmpty.classList.remove('hidden');
+        completedBoard.innerHTML = '';
+    } else {
+        completedEmpty.classList.add('hidden');
+        completedBoard.innerHTML = doneIdeas.map(idea => {
+            const catClass = CAT_COLORS[idea.category] || 'bg-gray-100 text-gray-600';
+            const catEmoji = CAT_EMOJIS[idea.category] || '✨';
+            const borderClass = CAT_BORDER_COLORS[idea.category] || 'border-gray-300';
+            const completedDate = idea.completed_at
+                ? new Date(idea.completed_at).toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'})
+                : '';
+            const safeId = idea.id;
+            return `<div class="completed-card bg-white/60 rounded-xl border-l-4 ${borderClass} border border-gray-100 px-4 py-3 flex items-center gap-3 group">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-semibold text-gray-500 text-sm line-through">${escHtml(idea.name)}</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${catClass} opacity-70">${catEmoji} ${escHtml(idea.category)}</span>
+                    </div>
+                    ${idea.notes ? `<p class="text-xs text-gray-400 mt-0.5 truncate line-through">${escHtml(idea.notes)}</p>` : ''}
+                    ${completedDate ? `<p class="text-xs text-gray-400 mt-0.5">✅ Completed ${completedDate}</p>` : ''}
+                </div>
+                <div class="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onclick="handleRestoreIdea('${safeId}')"
+                        class="text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 px-2 py-1.5 rounded-lg transition-colors text-xs font-semibold" title="Restore">↩ Restore</button>
+                    <button onclick="handleDeleteIdea('${safeId}', '${escHtml(idea.name).replace(/'/g, "&#039;")}')"
+                        class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors text-sm" title="Delete">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+}
+
+// ─── Drag & Drop ───────────────────────────────────────────────────────────────
+function onIdeaDragStart(event, index) {
+    dragSrcIndex = index;
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', index);
+    setTimeout(() => event.target.classList.add('dragging'), 0);
+}
+
+function onIdeaDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    const card = event.currentTarget;
+    card.classList.add('drag-over');
+}
+
+function onIdeaDragLeave(event) {
+    event.currentTarget.classList.remove('drag-over');
+}
+
+function onIdeaDragEnd(event) {
+    event.target.classList.remove('dragging');
+    document.querySelectorAll('.idea-card').forEach(c => c.classList.remove('drag-over'));
+}
+
+async function onIdeaDrop(event, dropIndex) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-over');
+    if (dragSrcIndex === null || dragSrcIndex === dropIndex) return;
+
+    const activeIdeas = ideas.filter(i => i.status !== 'done').sort((a, b) => (a.priority_order ?? 999) - (b.priority_order ?? 999));
+    const reordered = [...activeIdeas];
+    const [moved] = reordered.splice(dragSrcIndex, 1);
+    reordered.splice(dropIndex, 0, moved);
+
+    // Update local state immediately for snappy UI
+    reordered.forEach((idea, idx) => { idea.priority_order = idx + 1; });
+    renderIdeaBoard();
+
+    // Persist to Supabase
+    try {
+        await Promise.all(reordered.map((idea, idx) => patchIdea(idea.id, { priority_order: idx + 1 })));
+    } catch (err) {
+        showToast('Error saving order: ' + err.message, 'error');
+        // Reload fresh data on failure
+        const fresh = await fetchIdeas();
+        ideas = fresh;
+        renderIdeaBoard();
+    }
+    dragSrcIndex = null;
+}
+
+// ─── Idea actions ─────────────────────────────────────────────────────────────
+async function handleMarkDone(id) {
+    showLoading();
+    try {
+        await patchIdea(id, { status: 'done', completed_at: new Date().toISOString() });
+        const fresh = await fetchIdeas();
+        ideas = fresh;
+        renderIdeaBoard();
+        showToast('Idea marked as done! 🎉', 'success');
+    } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+async function handleRestoreIdea(id) {
+    showLoading();
+    try {
+        const activeIdeas = ideas.filter(i => i.status !== 'done');
+        const newOrder = activeIdeas.length + 1;
+        await patchIdea(id, { status: 'active', completed_at: null, priority_order: newOrder });
+        const fresh = await fetchIdeas();
+        ideas = fresh;
+        renderIdeaBoard();
+        showToast('Idea restored! ↩', 'success');
+    } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+async function handleDeleteIdea(id, name) {
+    if (!confirm(`Delete idea "${name}"?`)) return;
+    showLoading();
+    try {
+        await deleteIdea(id);
+        ideas = ideas.filter(i => i.id !== id);
+        renderIdeaBoard();
+        showToast('Idea deleted', 'success');
+    } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// ─── Completed section toggle ─────────────────────────────────────────────────
+function toggleCompletedSection() {
+    const section = document.getElementById('completedSection');
+    const chevron = document.getElementById('completedChevron');
+    section.classList.toggle('open');
+    chevron.style.transform = section.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+// ─── Idea Form Submit ─────────────────────────────────────────────────────────
+document.getElementById('ideaForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('idea_name').value.trim();
+    const category = document.getElementById('idea_category').value;
+    const notes = document.getElementById('idea_notes').value.trim();
+    if (!name || !category) {
+        showToast('Please fill in name and category!', 'error');
+        return;
+    }
+    const activeIdeas = ideas.filter(i => i.status !== 'done');
+    const priority_order = activeIdeas.length + 1;
+    showLoading();
+    try {
+        await postIdea({ name, category, notes, priority_order, status: 'active' });
+        showToast('Idea added to the board! 💡', 'success');
+        e.target.reset();
+        const fresh = await fetchIdeas();
+        ideas = fresh;
+        renderIdeaBoard();
+    } catch (err) {
+        showToast('Error saving idea: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+});
+
+// ─── Tab Switching ─────────────────────────────────────────────────────────────
+function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('tab-active');
+        b.style.color = '';
+    });
+    document.getElementById(`panel-${tab}`).classList.remove('hidden');
+    const btn = document.getElementById(`tab-${tab}`);
+    btn.classList.add('tab-active');
+
+    if (tab === 'league') renderLeague();
+    if (tab === 'suggestions') renderSuggestions();
+    if (tab === 'analytics') renderAnalytics();
+    if (tab === 'ideas') renderIdeaBoard();
+}
+
+// ─── Utils ────────────────────────────────────────────────────────────────────
+function escHtml(str) {
+    return (str || '').toString()
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#039;');
+}
+
+// ─── Close modal on backdrop click ────────────────────────────────────────────
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEditModal();
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+    initStars();
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('f_date').value = today;
+    fetchAll();
+    // Load ideas
+    try {
+        ideas = await fetchIdeas();
+        renderIdeaBoard();
+    } catch (err) {
+        // Table may not exist yet — silently ignore on first load
+        console.warn('Ideas table not ready:', err.message);
+    }
+    // Trigger bar animations on load
+    setTimeout(() => {
+        document.querySelectorAll('.score-bar').forEach(bar => {
+            const w = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => bar.style.width = w, 50);
+        });
+    }, 300);
+});
+ 
+</script>
+</body>
+</html>
