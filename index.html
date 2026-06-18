@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Review Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8c96a;
+            --gold-dark: #a07830;
+            --champagne: #f5e6c8;
+            --navy: #0a0f1e;
+            --navy-mid: #111827;
+            --navy-card: rgba(15, 22, 40, 0.82);
+            --navy-card-hover: rgba(20, 30, 55, 0.92);
+            --border-gold: rgba(201,168,76,0.25);
+            --border-gold-bright: rgba(201,168,76,0.55);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: #0a0f1e;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='900' viewBox='0 0 1440 900'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='0.3' y2='1'%3E%3Cstop offset='0%25' stop-color='%230a0f1e'/%3E%3Cstop offset='50%25' stop-color='%230d1528'/%3E%3Cstop offset='100%25' stop-color='%23070c18'/%3E%3C/linearGradient%3E%3ClinearGradient id='gold1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23c9a84c' stop-opacity='0.18'/%3E%3Cstop offset='100%25' stop-color='%23f5e6c8' stop-opacity='0.06'/%3E%3C/linearGradient%3E%3Cfilter id='blur1'%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='1440' height='900' fill='url(%23bg)'/%3E%3C!-- Subtle star field --%3E%3Ccircle cx='120' cy='60' r='1' fill='white' opacity='0.3'/%3E%3Ccircle cx='340' cy='40' r='1.5' fill='white' opacity='0.2'/%3E%3Ccircle cx='560' cy='90' r='1' fill='white' opacity='0.25'/%3E%3Ccircle cx='780' cy='30' r='1' fill='white' opacity='0.2'/%3E%3Ccircle cx='1000' cy='70' r='1.5' fill='white' opacity='0.3'/%3E%3Ccircle cx='1220' cy='50' r='1' fill='white' opacity='0.2'/%3E%3Ccircle cx='200' cy='140' r='1' fill='white' opacity='0.15'/%3E%3Ccircle cx='900' cy='120' r='1.5' fill='white' opacity='0.2'/%3E%3Ccircle cx='1380' cy='100' r='1' fill='white' opacity='0.25'/%3E%3C!-- DJ Monogram bottom-left --%3E%3Cg transform='translate(30,520)' filter='url(%23blur1)' opacity='0.07'%3E%3Ctext x='0' y='280' font-family='Georgia,serif' font-size='320' font-weight='700' fill='%23c9a84c' letter-spacing='-10'%3EDJ%3C/text%3E%3C!-- Flourish top --%3E%3Cpath d='M10,10 Q80,-30 160,10 Q240,50 300,10' stroke='%23c9a84c' stroke-width='3' fill='none' opacity='0.6'/%3E%3Cpath d='M10,20 Q80,-20 160,20 Q240,60 300,20' stroke='%23c9a84c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3C!-- Flourish bottom --%3E%3Cpath d='M10,295 Q80,335 160,295 Q240,255 300,295' stroke='%23c9a84c' stroke-width='3' fill='none' opacity='0.6'/%3E%3Cpath d='M10,305 Q80,345 160,305 Q240,265 300,305' stroke='%23c9a84c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3C!-- Corner ornaments --%3E%3Ccircle cx='10' cy='10' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Ccircle cx='300' cy='10' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Ccircle cx='10' cy='295' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Ccircle cx='300' cy='295' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Cline x1='10' y1='10' x2='40' y2='10' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3Cline x1='10' y1='10' x2='10' y2='40' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3Cline x1='300' y1='10' x2='270' y2='10' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3Cline x1='300' y1='10' x2='300' y2='40' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3C/g%3E%3C!-- PP Monogram top-right --%3E%3Cg transform='translate(1090,30)' filter='url(%23blur1)' opacity='0.07'%3E%3Ctext x='0' y='280' font-family='Georgia,serif' font-size='320' font-weight='700' fill='%23c9a84c' letter-spacing='-10'%3EPP%3C/text%3E%3C!-- Flourish top --%3E%3Cpath d='M10,10 Q80,-30 160,10 Q240,50 340,10' stroke='%23c9a84c' stroke-width='3' fill='none' opacity='0.6'/%3E%3Cpath d='M10,20 Q80,-20 160,20 Q240,60 340,20' stroke='%23c9a84c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3C!-- Flourish bottom --%3E%3Cpath d='M10,295 Q80,335 160,295 Q240,255 340,295' stroke='%23c9a84c' stroke-width='3' fill='none' opacity='0.6'/%3E%3Cpath d='M10,305 Q80,345 160,305 Q240,265 340,305' stroke='%23c9a84c' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3C!-- Corner ornaments --%3E%3Ccircle cx='10' cy='10' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Ccircle cx='340' cy='10' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Ccircle cx='10' cy='295' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Ccircle cx='340' cy='295' r='5' fill='%23c9a84c' opacity='0.5'/%3E%3Cline x1='10' y1='10' x2='40' y2='10' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3Cline x1='10' y1='10' x2='10' y2='40' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3Cline x1='340' y1='10' x2='310' y2='10' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3Cline x1='340' y1='10' x2='340' y2='40' stroke='%23c9a84c' stroke-width='2' opacity='0.6'/%3E%3C/g%3E%3C!-- Radial gold glow centre --%3E%3Cellipse cx='720' cy='450' rx='600' ry='350' fill='url(%23gold1)' opacity='0.3'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #e8dcc8;
+        }
+
+        .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+
+        /* Glass panels */
+        .panel-glass {
+            background: rgba(10, 18, 38, 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(201,168,76,0.22);
+        }
+        .panel-glass-light {
+            background: rgba(15, 25, 50, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(201,168,76,0.18);
+        }
+
+        /* Gold gradient buttons */
+        .btn-gold {
+            background: linear-gradient(135deg, #b8922a 0%, #e8c96a 50%, #b8922a 100%);
+            color: #0a0f1e;
+            font-weight: 700;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+        }
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #c9a84c 0%, #f5e6c8 50%, #c9a84c 100%);
+            box-shadow: 0 6px 28px rgba(201,168,76,0.5);
+            transform: translateY(-1px);
+        }
+        .btn-gold:active { transform: translateY(0) scale(0.97); }
+
+        .btn-gold-outline {
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.5);
+            color: #c9a84c;
+            transition: all 0.25s ease;
+        }
+        .btn-gold-outline:hover {
+            background: rgba(201,168,76,0.1);
+            border-color: #c9a84c;
+            box-shadow: 0 0 18px rgba(201,168,76,0.2);
+        }
+
+        /* Tab bar */
+        .tab-active {
+            border-bottom: 2px solid #c9a84c;
+            color: #c9a84c !important;
+        }
+        .tab-btn {
+            color: rgba(245,230,200,0.5);
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .tab-btn:hover { color: rgba(245,230,200,0.85); }
+
+        /* Inputs */
+        .input-dark {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(201,168,76,0.2);
+            color: #f5e6c8;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-dark::placeholder { color: rgba(245,230,200,0.3); }
+        .input-dark:focus {
+            outline: none;
+            border-color: rgba(201,168,76,0.6);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+        }
+        .input-dark option { background: #111827; color: #f5e6c8; }
+
+        /* Score bar */
+        .score-bar { transition: width 0.8s ease-in-out; }
+
+        /* Stars */
+        .star-btn { cursor: pointer; transition: transform 0.1s; }
+        .star-btn:hover { transform: scale(1.2); }
+
+        /* Toast */
+        .toast { animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; pointer-events: none; } }
+
+        /* Spinner */
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Card hover */
+        .card-hover { transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(201,168,76,0.15);
+            border-color: rgba(201,168,76,0.4) !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+        ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(201,168,76,0.5); }
+
+        /* Edit modal */
+        #editModal { display: none; }
+        #editModal.open { display: flex; }
+
+        /* Score breakdown row */
+        .breakdown-row { display: none; }
+        .breakdown-row.open { display: table-row; }
+
+        /* Idea board */
+        .idea-card { transition: box-shadow 0.2s, transform 0.15s, opacity 0.15s; }
+        .idea-card.dragging { opacity: 0.45; transform: scale(1.02); box-shadow: 0 12px 32px rgba(201,168,76,0.25); }
+        .idea-card.drag-over { box-shadow: 0 0 0 2px #c9a84c, 0 4px 16px rgba(201,168,76,0.2); }
+        .drag-handle { cursor: grab; user-select: none; }
+        .drag-handle:active { cursor: grabbing; }
+        .completed-card { opacity: 0.55; }
+        #completedSection { display: none; }
+        #completedSection.open { display: block; }
+
+        /* Lightbox */
+        #lightbox { display: none; }
+        #lightbox.open { display: flex; }
+
+        /* Gold divider */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+        }
+
+        /* Badge */
+        .badge-gold { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3); }
+        .badge-dark { background: rgba(255,255,255,0.06); color: rgba(245,230,200,0.7); border: 1px solid rgba(255,255,255,0.1); }
+
+        @keyframes bubbleRise {
+            0%   { transform: translateY(0) scale(1); opacity: 0.7; }
+            80%  { opacity: 0.4; }
+            100% { transform: translateY(-420px) scale(0.4); opacity: 0; }
+        }
+        @keyframes spinPulse {
+            from { text-shadow: 0 0 18px #fbbf24, 0 0 6px #f59e0b, 0 2px 0 #92400e; transform: scale(1); }
+            to   { text-shadow: 0 0 48px #fbbf24, 0 0 24px #f59e0b, 0 2px 0 #92400e; transform: scale(1.06); }
+        }
+        @keyframes goldShimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .gold-shimmer {
+            background: linear-gradient(90deg, #c9a84c, #f5e6c8, #c9a84c, #f5e6c8, #c9a84c);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldShimmer 4s linear infinite;
+        }
+
+        /* Table */
+        .dark-table thead tr th { color: rgba(201,168,76,0.7); border-bottom: 1px solid rgba(201,168,76,0.15); }
+        .dark-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.15s; }
+        .dark-table tbody tr:hover { background: rgba(201,168,76,0.04); }
+
+        /* Photo thumbnails */
+        .photo-thumb {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(201,168,76,0.3);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .photo-thumb:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+        }
+
+        /* Category colours — dark theme variants */
+        .cat-date-night   { background: rgba(236,72,153,0.15); color: #f9a8d4; border: 1px solid rgba(236,72,153,0.25); }
+        .cat-day-activity { background: rgba(56,189,248,0.12); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.22); }
+        .cat-sports       { background: rgba(34,197,94,0.12);  color: #86efac; border: 1px solid rgba(34,197,94,0.22); }
+        .cat-holiday      { background: rgba(251,146,60,0.12); color: #fdba74; border: 1px solid rgba(251,146,60,0.22); }
+        .cat-other        { background: rgba(167,139,250,0.12);color: #c4b5fd; border: 1px solid rgba(167,139,250,0.22); }
+
+        .cat-border-date-night   { border-left-color: #ec4899 !important; }
+        .cat-border-day-activity { border-left-color: #38bdf8 !important; }
+        .cat-border-sports       { border-left-color: #22c55e !important; }
+        .cat-border-holiday      { border-left-color: #fb923c !important; }
+        .cat-border-other        { border-left-color: #a78bfa !important; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Header -->
+<header style="background: linear-gradient(180deg, rgba(5,8,18,0.98) 0%, rgba(10,15,30,0.95) 100%); border-bottom: 1px solid rgba(201,168,76,0.2); backdrop-filter: blur(20px);" class="sticky top-0 z-50 shadow-2xl">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div style="background: linear-gradient(135deg, #b8922a, #e8c96a, #b8922a); border-radius: 12px; padding: 8px 12px; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px; color: #0a0f1e; letter-spacing: 1px; box-shadow: 0 4px 16px rgba(201,168,76,0.4);">DJ × PP</div>
+            <div>
+                <h1 class="font-serif text-xl font-bold tracking-wide" style="color: #f5e6c8;">Experience Review Tracker</h1>
+                <p style="color: rgba(201,168,76,0.7); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;">Rate · Rank · Remember</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <span id="liveCount" class="hidden text-sm" style="color: rgba(245,230,200,0.5);"></span>
+            <span class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full" style="background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3);">
+                <span class="w-2 h-2 rounded-full animate-pulse" style="background: #22c55e;"></span>
+                Live
+            </span>
+        </div>
+    </div>
+    <!-- Tabs -->
+    <div class="max-w-6xl mx-auto px-4 flex gap-0 overflow-x-auto" style="border-top: 1px solid rgba(201,168,76,0.08);">
+        <button onclick="switchTab('log')" id="tab-log" class="tab-btn tab-active px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all">📝 Log</button>
+        <button onclick="switchTab('league')" id="tab-league" class="tab-btn px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all">🏆 League</button>
+        <button onclick="switchTab('suggestions')" id="tab-suggestions" class="tab-btn px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all">💡 Suggestions</button>
+        <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all">📊 Analytics</button>
+        <button onclick="switchTab('ideas')" id="tab-ideas" class="tab-btn px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all">🗒️ Idea Board</button>
+        <button onclick="switchTab('spin')" id="tab-spin" class="tab-btn px-5 py-3 text-sm font-semibold whitespace-nowrap transition-all">🎡 Spin</button>
+    </div>
+</header>
+
+<!-- Toast -->
+<div id="toastContainer" class="fixed top-20 right-4 z-50 flex flex-col gap-2"></div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="fixed inset-0 z-50 items-center justify-center p-4 overflow-y-auto" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);">
+    <div class="panel-glass rounded-2xl shadow-2xl w-full max-w-lg my-4" style="border: 1px solid rgba(201,168,76,0.35);">
+        <div class="flex items-center justify-between p-6" style="border-bottom: 1px solid rgba(201,168,76,0.15);">
+            <h2 class="font-serif text-lg font-bold flex items-center gap-2" style="color: #f5e6c8;">
+                <span style="background: rgba(201,168,76,0.15); color: #c9a84c; padding: 8px; border-radius: 10px; border: 1px solid rgba(201,168,76,0.3);">✏️</span>
+                Edit Experience
+            </h2>
+            <button onclick="closeEditModal()" style="color: rgba(245,230,200,0.4); font-size: 24px; line-height: 1; transition: color 0.2s;" onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='rgba(245,230,200,0.4)'">&times;</button>
+        </div>
+        <form id="editForm" class="p-6 space-y-4">
+            <input type="hidden" id="e_id"/>
+            <div>
+                <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Experience Name *</label>
+                <input type="text" id="e_name" required placeholder="e.g. Sushi Dinner at Nobu" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Date *</label>
+                    <input type="date" id="e_date" required class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Category *</label>
+                    <select id="e_category" required class="input-dark w-full rounded-xl px-4 py-2.5 text-sm">
+                        <option value="">Select...</option>
+                        <option value="Date Night">🌹 Date Night</option>
+                        <option value="Day Activity">☀️ Day Activity</option>
+                        <option value="Sports">⚽ Sports</option>
+                        <option value="Holiday Related">✈️ Holiday Related</option>
+                        <option value="Other">✨ Other</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Organiser *</label>
+                <input type="text" id="e_organiser" required placeholder="Who organised this?" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Notes</label>
+                <textarea id="e_notes" rows="2" placeholder="Any memorable moments?" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm resize-none"></textarea>
+            </div>
+            <div class="rounded-xl p-4 space-y-3" style="background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18);">
+                <p class="text-sm font-bold mb-2" style="color: #c9a84c; font-family: 'Playfair Display', serif;">⭐ Update Ratings</p>
+                <div id="editStarRatings" class="space-y-3">
+                    <div class="star-row flex items-center justify-between" data-field="e_food_drink">
+                        <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">🍽️ Food &amp; Drink</span>
+                        <div class="flex gap-1" id="estars-food_drink">
+                            <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="eval-food_drink">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_location_venue">
+                        <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">📍 Location/Venue</span>
+                        <div class="flex gap-1" id="estars-location_venue">
+                            <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="eval-location_venue">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_atmosphere">
+                        <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">🎭 Atmosphere</span>
+                        <div class="flex gap-1" id="estars-atmosphere">
+                            <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="eval-atmosphere">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_recommend">
+                        <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">👍 Recommend</span>
+                        <div class="flex gap-1" id="estars-recommend">
+                            <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="eval-recommend">0</span>
+                    </div>
+                    <div class="star-row flex items-center justify-between" data-field="e_enjoyment">
+                        <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">😄 Enjoyment</span>
+                        <div class="flex gap-1" id="estars-enjoyment">
+                            <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                        </div>
+                        <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="eval-enjoyment">0</span>
+                    </div>
+                </div>
+                <div class="gold-divider mt-3"></div>
+                <div class="flex items-center justify-between pt-2">
+                    <span class="text-sm font-bold" style="color: rgba(245,230,200,0.8);">Total Score</span>
+                    <span id="editTotalScore" class="text-2xl font-black" style="color: #c9a84c; font-family: 'Playfair Display', serif;">0 <span class="text-sm font-normal" style="color: rgba(245,230,200,0.4);">/ 25</span></span>
+                </div>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="closeEditModal()" class="btn-gold-outline flex-1 font-bold py-2.5 rounded-xl">Cancel</button>
+                <button type="submit" class="btn-gold flex-1 py-2.5 rounded-xl">💾 Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="fixed inset-0 z-50 items-center justify-center p-4" style="background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-3xl z-10 transition-colors" style="color: rgba(245,230,200,0.6);" onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='rgba(245,230,200,0.6)'">&times;</button>
+    <button onclick="lightboxPrev()" class="absolute left-4 top-1/2 -translate-y-1/2 text-3xl z-10 px-3 py-2 rounded-xl transition-all" style="color: rgba(245,230,200,0.7); background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">‹</button>
+    <button onclick="lightboxNext()" class="absolute right-14 top-1/2 -translate-y-1/2 text-3xl z-10 px-3 py-2 rounded-xl transition-all" style="color: rgba(245,230,200,0.7); background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">›</button>
+    <img id="lightboxImg" src="" alt="" class="max-h-screen max-w-full rounded-xl shadow-2xl" style="border: 1px solid rgba(201,168,76,0.3); max-height: 85vh; object-fit: contain;"/>
+    <div id="lightboxCounter" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm" style="color: rgba(245,230,200,0.5);"></div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center hidden" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);">
+    <div class="rounded-2xl p-8 flex flex-col items-center gap-3 shadow-2xl" style="background: rgba(10,18,38,0.95); border: 1px solid rgba(201,168,76,0.3);">
+        <svg class="spinner w-10 h-10" style="color: #c9a84c;" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <p class="text-sm font-medium" style="color: rgba(245,230,200,0.7);">Loading...</p>
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+
+    <!-- TAB 1: LOG EXPERIENCE -->
+    <div id="panel-log" class="tab-panel">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- Form -->
+            <div class="lg:col-span-2">
+                <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                    <h2 class="font-serif text-lg font-bold mb-1 flex items-center gap-2" style="color: #f5e6c8;">
+                        <span style="background: rgba(201,168,76,0.15); color: #c9a84c; padding: 8px; border-radius: 10px; border: 1px solid rgba(201,168,76,0.3);">📝</span>
+                        Log New Experience
+                    </h2>
+                    <p class="text-xs mb-5 ml-11" style="color: rgba(201,168,76,0.5); letter-spacing: 0.5px;">Record your latest adventure</p>
+                    <form id="experienceForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Experience Name *</label>
+                            <input type="text" id="f_name" required placeholder="e.g. Sushi Dinner at Nobu" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Date *</label>
+                                <input type="date" id="f_date" required class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Category *</label>
+                                <select id="f_category" required class="input-dark w-full rounded-xl px-4 py-2.5 text-sm">
+                                    <option value="">Select...</option>
+                                    <option value="Date Night">🌹 Date Night</option>
+                                    <option value="Day Activity">☀️ Day Activity</option>
+                                    <option value="Sports">⚽ Sports</option>
+                                    <option value="Holiday Related">✈️ Holiday Related</option>
+                                    <option value="Other">✨ Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Organiser *</label>
+                            <input type="text" id="f_organiser" required placeholder="Who organised this?" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Notes</label>
+                            <textarea id="f_notes" rows="3" placeholder="Any memorable moments?" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm resize-none"></textarea>
+                        </div>
+                        <!-- Star Ratings -->
+                        <div class="rounded-xl p-4 space-y-3" style="background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18);">
+                            <p class="text-sm font-bold mb-2" style="color: #c9a84c; font-family: 'Playfair Display', serif;">⭐ Rate Your Experience</p>
+                            <div id="starRatings" class="space-y-3">
+                                <div class="star-row flex items-center justify-between" data-field="food_drink">
+                                    <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">🍽️ Food & Drink</span>
+                                    <div class="flex gap-1" id="stars-food_drink">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="val-food_drink">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="location_venue">
+                                    <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">📍 Location/Venue</span>
+                                    <div class="flex gap-1" id="stars-location_venue">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="val-location_venue">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="atmosphere">
+                                    <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">🎭 Atmosphere</span>
+                                    <div class="flex gap-1" id="stars-atmosphere">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="val-atmosphere">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="recommend">
+                                    <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">👍 Recommend</span>
+                                    <div class="flex gap-1" id="stars-recommend">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="val-recommend">0</span>
+                                </div>
+                                <div class="star-row flex items-center justify-between" data-field="enjoyment">
+                                    <span class="text-sm font-medium w-36" style="color: rgba(245,230,200,0.8);">😄 Enjoyment</span>
+                                    <div class="flex gap-1" id="stars-enjoyment">
+                                        <span class="star-btn text-2xl" data-val="1">☆</span><span class="star-btn text-2xl" data-val="2">☆</span><span class="star-btn text-2xl" data-val="3">☆</span><span class="star-btn text-2xl" data-val="4">☆</span><span class="star-btn text-2xl" data-val="5">☆</span>
+                                    </div>
+                                    <span class="text-xs w-6 text-right" style="color: rgba(245,230,200,0.4);" id="val-enjoyment">0</span>
+                                </div>
+                            </div>
+                            <div class="gold-divider mt-3"></div>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-sm font-bold" style="color: rgba(245,230,200,0.8);">Total Score</span>
+                                <span id="totalScore" class="text-2xl font-black" style="color: #c9a84c; font-family: 'Playfair Display', serif;">0 <span class="text-sm font-normal" style="color: rgba(245,230,200,0.4);">/ 25</span></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-gold w-full py-3 rounded-xl text-sm tracking-wider uppercase">
+                            🚀 Submit Experience
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class="lg:col-span-3">
+                <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="font-serif text-lg font-bold flex items-center gap-2" style="color: #f5e6c8;">
+                            <span style="background: rgba(201,168,76,0.15); color: #c9a84c; padding: 8px; border-radius: 10px; border: 1px solid rgba(201,168,76,0.3);">📋</span>
+                            All Experiences
+                        </h2>
+                        <span id="expCount" class="badge-gold text-xs font-bold px-3 py-1 rounded-full">0 entries</span>
+                    </div>
+                    <div id="logTableContainer" class="overflow-x-auto">
+                        <div id="logTableEmpty" class="text-center py-16" style="color: rgba(245,230,200,0.3);">
+                            <div class="text-5xl mb-3">📭</div>
+                            <p class="font-medium">No experiences logged yet</p>
+                            <p class="text-sm mt-1" style="color: rgba(245,230,200,0.2);">Fill out the form to get started!</p>
+                        </div>
+                        <table id="logTable" class="dark-table w-full text-sm hidden">
+                            <thead>
+                                <tr class="text-left text-xs uppercase tracking-wider">
+                                    <th class="pb-3 font-semibold">Name</th>
+                                    <th class="pb-3 font-semibold">Date</th>
+                                    <th class="pb-3 font-semibold">Category</th>
+                                    <th class="pb-3 font-semibold">Organiser</th>
+                                    <th class="pb-3 font-semibold text-center">Score</th>
+                                    <th class="pb-3 font-semibold text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: LEAGUE TABLE -->
+    <div id="panel-league" class="tab-panel hidden">
+        <div class="space-y-6">
+            <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                <h2 class="font-serif text-lg font-bold mb-6 flex items-center gap-2" style="color: #f5e6c8;">
+                    <span style="background: rgba(201,168,76,0.15); color: #c9a84c; padding: 8px; border-radius: 10px; border: 1px solid rgba(201,168,76,0.3);">🏆</span>
+                    Experience League Table
+                </h2>
+                <div id="leagueTable" class="space-y-3">
+                    <div class="text-center py-10" style="color: rgba(245,230,200,0.3);"><div class="text-4xl mb-2">🏆</div><p>No data yet</p></div>
+                </div>
+            </div>
+            <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                <h2 class="font-serif text-lg font-bold mb-6 flex items-center gap-2" style="color: #f5e6c8;">
+                    <span style="background: rgba(167,139,250,0.15); color: #c4b5fd; padding: 8px; border-radius: 10px; border: 1px solid rgba(167,139,250,0.3);">👑</span>
+                    Organiser League
+                </h2>
+                <div id="organiserLeague" class="space-y-3">
+                    <div class="text-center py-10" style="color: rgba(245,230,200,0.3);"><div class="text-4xl mb-2">👑</div><p>No data yet</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: SUGGESTIONS -->
+    <div id="panel-suggestions" class="tab-panel hidden">
+        <div class="panel-glass rounded-2xl shadow-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-serif text-lg font-bold flex items-center gap-2" style="color: #f5e6c8;">
+                    <span style="background: rgba(34,197,94,0.12); color: #86efac; padding: 8px; border-radius: 10px; border: 1px solid rgba(34,197,94,0.25);">💡</span>
+                    Smart Suggestions
+                </h2>
+                <button onclick="renderSuggestions()" class="btn-gold-outline flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl">
+                    🔄 Refresh
+                </button>
+            </div>
+            <div id="suggestionsContent">
+                <div class="text-center py-16" style="color: rgba(245,230,200,0.3);"><div class="text-5xl mb-3">💡</div><p>Loading suggestions...</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: ANALYTICS -->
+    <div id="panel-analytics" class="tab-panel hidden">
+        <div class="space-y-6">
+            <div id="statsCards" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                    <h3 class="font-serif font-bold mb-4 flex items-center gap-2" style="color: #f5e6c8;"><span class="text-xl">📊</span> Avg Score by Metric</h3>
+                    <div id="metricBars" class="space-y-3"></div>
+                </div>
+                <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                    <h3 class="font-serif font-bold mb-4 flex items-center gap-2" style="color: #f5e6c8;"><span class="text-xl">📂</span> Avg Score by Category</h3>
+                    <div id="categoryBars" class="space-y-3"></div>
+                </div>
+            </div>
+            <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                <h3 class="font-serif font-bold mb-4 flex items-center gap-2" style="color: #f5e6c8;"><span class="text-xl">📈</span> Score Distribution</h3>
+                <div id="scoreDistribution" class="grid grid-cols-5 md:grid-cols-10 gap-2"></div>
+            </div>
+            <div id="topRatedBox"></div>
+        </div>
+    </div>
+
+    <!-- TAB 5: IDEA BOARD -->
+    <div id="panel-ideas" class="tab-panel hidden">
+        <div class="space-y-6">
+            <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                <h2 class="font-serif text-lg font-bold mb-5 flex items-center gap-2" style="color: #f5e6c8;">
+                    <span style="background: rgba(167,139,250,0.15); color: #c4b5fd; padding: 8px; border-radius: 10px; border: 1px solid rgba(167,139,250,0.3);">💡</span>
+                    Add New Idea
+                </h2>
+                <form id="ideaForm" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                    <div class="md:col-span-1">
+                        <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Idea Name *</label>
+                        <input type="text" id="idea_name" required placeholder="e.g. Hot air balloon ride" class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Category *</label>
+                        <select id="idea_category" required class="input-dark w-full rounded-xl px-4 py-2.5 text-sm">
+                            <option value="">Select...</option>
+                            <option value="Date Night">🌹 Date Night</option>
+                            <option value="Day Activity">☀️ Day Activity</option>
+                            <option value="Sports">⚽ Sports</option>
+                            <option value="Holiday Related">✈️ Holiday Related</option>
+                            <option value="Other">✨ Other</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block text-xs font-semibold mb-1 uppercase tracking-wider" style="color: rgba(201,168,76,0.7);">Notes</label>
+                        <input type="text" id="idea_notes" placeholder="Details, links, ideas..." class="input-dark w-full rounded-xl px-4 py-2.5 text-sm"/>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-gold w-full py-2.5 rounded-xl text-sm">➕ Add Idea</button>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-glass rounded-2xl shadow-2xl p-6">
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="font-serif text-lg font-bold flex items-center gap-2" style="color: #f5e6c8;">
+                        <span style="background: rgba(201,168,76,0.15); color: #c9a84c; padding: 8px; border-radius: 10px; border: 1px solid rgba(201,168,76,0.3);">🎯</span>
+                        Priority Board
+                        <span id="ideaActiveCount" class="badge-gold text-xs font-bold px-2.5 py-1 rounded-full ml-1">0 ideas</span>
+                    </h2>
+                    <p class="text-xs hidden md:block" style="color: rgba(245,230,200,0.3);">Drag cards to reorder priority</p>
+                </div>
+                <div id="ideaBoardEmpty" class="text-center py-16" style="color: rgba(245,230,200,0.3);">
+                    <div class="text-5xl mb-3">🗒️</div>
+                    <p class="font-medium">No ideas yet</p>
+                    <p class="text-sm mt-1" style="color: rgba(245,230,200,0.2);">Add your first idea above!</p>
+                </div>
+                <div id="ideaBoard" class="space-y-2"></div>
+            </div>
+            <div class="panel-glass rounded-2xl shadow-2xl overflow-hidden" style="border: 1px solid rgba(201,168,76,0.22);">
+                <button onclick="toggleCompletedSection()" class="w-full flex items-center justify-between p-5 transition-colors" style="hover: background rgba(201,168,76,0.05);">
+                    <h2 class="font-serif text-base font-bold flex items-center gap-2" style="color: #f5e6c8;">
+                        <span style="background: rgba(34,197,94,0.12); color: #86efac; padding: 6px; border-radius: 8px; border: 1px solid rgba(34,197,94,0.22); font-size: 12px;">✅</span>
+                        Completed Ideas
+                        <span id="ideaDoneCount" class="text-xs font-bold px-2.5 py-1 rounded-full ml-1" style="background: rgba(34,197,94,0.12); color: #86efac; border: 1px solid rgba(34,197,94,0.22);">0 done</span>
+                    </h2>
+                    <span id="completedChevron" style="color: rgba(245,230,200,0.3); font-size: 18px; transition: transform 0.3s;">▼</span>
+                </button>
+                <div id="completedSection">
+                    <div class="px-6 pb-5">
+                        <div id="completedBoardEmpty" class="text-center py-8" style="color: rgba(245,230,200,0.3);"><p class="text-sm">No completed ideas yet.</p></div>
+                        <div id="completedBoard" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 6: SPIN THE WHEEL -->
+    <div id="panel-spin" class="tab-panel hidden">
+        <div class="flex flex-col items-center gap-6">
+            <div class="panel-glass rounded-2xl shadow-2xl p-8 flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
+                <h2 class="font-serif text-2xl font-black flex items-center gap-2" style="color: #f5e6c8;">🎡 Spin the Wheel!</h2>
+                <p class="text-sm -mt-4" style="color: rgba(201,168,76,0.6);">What will fate decide today?</p>
+                <div class="relative flex flex-col items-center">
+                    <div id="wheelPointer" class="z-10 mb-[-10px]">
+                        <svg width="32" height="36" viewBox="0 0 32 36">
+                            <polygon points="16,34 2,2 30,2" fill="#c9a84c" stroke="rgba(245,230,200,0.8)" stroke-width="2.5" stroke-linejoin="round"/>
+                            <circle cx="16" cy="4" r="4" fill="rgba(245,230,200,0.9)" stroke="#c9a84c" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <canvas id="wheelCanvas" width="380" height="380" class="rounded-full" style="display:block; box-shadow: 0 0 60px rgba(201,168,76,0.25), 0 20px 60px rgba(0,0,0,0.6);"></canvas>
+                </div>
+                <button id="spinBtn" onclick="spinWheel()" class="btn-gold mt-2 font-black text-xl px-16 py-4 rounded-2xl tracking-widest uppercase" style="font-family: 'Playfair Display', serif; letter-spacing: 0.15em;">
+                    🎰 SPIN!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spin Result Modal -->
+    <div id="spinModal" class="fixed inset-0 z-50 flex items-end justify-center hidden" style="background:rgba(0,0,0,0);">
+        <div id="spinModalBg" class="absolute inset-0" style="background:rgba(0,0,0,0);transition:background 0.4s;"></div>
+        <div id="spinModalPanel" class="relative z-10 w-full max-w-lg mx-auto rounded-t-3xl shadow-2xl flex flex-col items-center gap-4 pb-10 pt-10 px-8"
+            style="background:linear-gradient(135deg,#0a0f1e 0%,#111827 40%,#1a1040 100%); border-top: 2px solid rgba(201,168,76,0.5); border-left: 1px solid rgba(201,168,76,0.3); border-right: 1px solid rgba(201,168,76,0.3); transform:translateY(100%);transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);">
+            <div id="foamBubbles" class="absolute inset-0 overflow-hidden rounded-t-3xl pointer-events-none"></div>
+            <div class="text-6xl mb-2 animate-bounce">🍺</div>
+            <div class="text-2xl font-black tracking-wide text-center" style="color: #c9a84c; font-family: 'Playfair Display', serif;">🎉 CONGRATULATIONS! 🎉</div>
+            <div id="spinResultText" class="text-4xl font-black text-center mt-1" style="color:#fde68a;text-shadow:0 0 32px #fbbf24,0 0 12px #f59e0b,0 2px 0 #92400e;animation:spinPulse 1s ease-in-out infinite alternate; font-family: 'Playfair Display', serif;">
+                Dan Gets a Beer!
+            </div>
+            <p class="text-sm mt-1 text-center" style="color: rgba(201,168,76,0.5);">The wheel has spoken. No arguments accepted.</p>
+            <button onclick="closeSpinModal()" class="btn-gold mt-4 font-black text-lg px-12 py-3.5 rounded-2xl">🔄 Spin Again!</button>
+        </div>
+    </div>
+
+    <!-- Confetti canvas -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-40" style="display:none;"></canvas>
+
+</main>
+
+<script>
+/*
+-- Run this SQL in Supabase SQL editor for photos table:
+CREATE TABLE experience_photos (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  experience_id UUID NOT NULL,
+  storage_path TEXT NOT NULL,
+  file_name TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+ALTER TABLE experience_photos ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all" ON experience_photos FOR ALL USING (true) WITH CHECK (true);
+
+-- Also create storage bucket "experience-photos" in Supabase Dashboard > Storage
+-- Set bucket to public so images can be viewed via URL
+*/
+
+const SUPABASE_URL = 'https://mrosmzlofnsmwrrbqdwp.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yb3NtemxvZm5zbXdycmJxZHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2OTU5MTEsImV4cCI6MjA5NzI3MTkxMX0.LiFmzA9ZuuXTM8MGZwaI4izDguT1BUCgTY25GElKsHQ';
+const BASE_URL = `${SUPABASE_URL}/rest/v1/experiences`;
+const PHOTOS_URL = `${SUPABASE_URL}/rest/v1/experience_photos`;
+const STORAGE_URL = `${SUPABASE_URL}/storage/v1/object`;
+const STORAGE_PUBLIC = `${SUPABASE_URL}/storage/v1/object/public/experience-photos`;
+const HEADERS = {
+    'apikey': ANON_KEY,
+    'Authorization': `Bearer ${ANON_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+};
+
+let experiences = [];
+let ratings = { food_drink: 0, location_venue: 0, atmosphere: 0, recommend: 0, enjoyment: 0 };
+let editRatings = { food_drink: 0, location_venue: 0, atmosphere: 0, recommend: 0, enjoyment: 0 };
+let currentTab = 'log';
+let ideas = [];
+let dragSrcIndex = null;
+let photosCache = {}; // experienceId -> array of photo objects
+let lightboxPhotos = [];
+let lightboxIndex = 0;
+
+const ALL_CATEGORIES = ['Date Night', 'Day Activity', 'Sports', 'Holiday Related', 'Other'];
+const CAT_EMOJIS = {
+    'Date Night': '🌹',
+    'Day Activity': '☀️',
+    'Sports': '⚽',
+    'Holiday Related': '✈️',
+    'Other': '✨'
+};
+const CAT_CSS = {
+    'Date Night':     'cat-date-night',
+    'Day Activity':   'cat-day-activity',
+    'Sports':         'cat-sports',
+    'Holiday Related':'cat-holiday',
+    'Other':          'cat-other'
+};
+const CAT_BORDER = {
+    'Date Night':     'cat-border-date-night',
+    'Day Activity':   'cat-border-day-activity',
+    'Sports':         'cat-border-sports',
+    'Holiday Related':'cat-border-holiday',
+    'Other':          'cat-border-other'
+};
+
+// ─── Loading & Toast ───────────────────────────────────────────────────────
+function showLoading() { document.getElementById('loadingOverlay').classList.remove('hidden'); }
+function hideLoading() { document.getElementById('loadingOverlay').classList.add('hidden'); }
+
+function showToast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    const bg = type === 'success'
+        ? 'background: rgba(10,18,38,0.95); border: 1px solid rgba(201,168,76,0.4); color: #c9a84c;'
+        : type === 'error'
+        ? 'background: rgba(30,5,10,0.95); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5;'
+        : 'background: rgba(10,18,38,0.95); border: 1px solid rgba(56,189,248,0.4); color: #7dd3fc;';
+    t.className = `toast px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold flex items-center gap-2 max-w-xs`;
+    t.style.cssText = bg + ' backdrop-filter: blur(12px);';
+    t.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+}
+
+// ─── Supabase Calls ────────────────────────────────────────────────────────
+async function fetchAll() {
+    showLoading();
+    try {
+        const res = await fetch(`${BASE_URL}?order=created_at.desc`, { headers: HEADERS });
+        if (!res.ok) throw new Error(await res.text());
+        experiences = await res.json();
+        updateAll();
+    } catch (e) {
+        showToast('Failed to load data: ' + e.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+async function postExperience(data) {
+    const res = await fetch(BASE_URL, { method: 'POST', headers: HEADERS, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+async function deleteExperience(id) {
+    const res = await fetch(`${BASE_URL}?id=eq.${id}`, { method: 'DELETE', headers: HEADERS });
+    if (!res.ok) throw new Error(await res.text());
+}
+
+async function patchExperience(id, data) {
+    const res = await fetch(`${BASE_URL}?id=eq.${id}`, { method: 'PATCH', headers: HEADERS, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+
+// ─── Photos ────────────────────────────────────────────────────────────────
+async function fetchPhotosForExperience(expId) {
+    try {
+        const res = await fetch(`${PHOTOS_URL}?experience_id=eq.${expId}&order=created_at.asc`, { headers: HEADERS });
+        if (!res.ok) return [];
+        return await res.json();
+    } catch { return []; }
+}
+
+async function uploadPhoto(expId, file) {
+    const ext = file.name.split('.').pop();
+    const path = `${expId}/${Date.now()}_${Math.random().toString(36).substr(2,8)}.${ext}`;
+    // Upload to storage
+    const storageRes = await fetch(`${STORAGE_URL}/experience-photos/${path}`, {
+        method: 'POST',
+        headers: {
+            'apikey': ANON_KEY,
+            'Authorization': `Bearer ${ANON_KEY}`,
+            'Content-Type': file.type,
+            'x-upsert': 'true'
+        },
+        body: file
+    });
+    if (!storageRes.ok) {
+        const err = await storageRes.text();
+        throw new Error('Storage upload failed: ' + err);
+    }
+    // Save record to DB
+    const dbRes = await fetch(PHOTOS_URL, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({ experience_id: expId, storage_path: path, file_name: file.name })
+    });
+    if (!dbRes.ok) throw new Error('DB record failed: ' + await dbRes.text());
+    return await dbRes.json();
+}
+
+async function deletePhoto(photoId, storagePath) {
+    // Delete from storage
+    try {
+        await fetch(`${STORAGE_URL}/experience-photos/${storagePath}`, {
+            method: 'DELETE',
+            headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` }
+        });
+    } catch {}
+    // Delete DB record
+    await fetch(`${PHOTOS_URL}?id=eq.${photoId}`, { method: 'DELETE', headers: HEADERS });
+}
+
+function getPhotoUrl(storagePath) {
+    return `${STORAGE_PUBLIC}/${storagePath}`;
+}
+
+// ─── Ideas Supabase ────────────────────────────────────────────────────────
+const IDEAS_URL = `${SUPABASE_URL}/rest/v1/ideas`;
+
+async function fetchIdeas() {
+    const res = await fetch(`${IDEAS_URL}?order=priority_order.asc,created_at.asc`, { headers: HEADERS });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+async function postIdea(data) {
+    const res = await fetch(IDEAS_URL, { method: 'POST', headers: HEADERS, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+async function patchIdea(id, data) {
+    const res = await fetch(`${IDEAS_URL}?id=eq.${id}`, { method: 'PATCH', headers: HEADERS, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+}
+async function deleteIdea(id) {
+    const res = await fetch(`${IDEAS_URL}?id=eq.${id}`, { method: 'DELETE', headers: HEADERS });
+    if (!res.ok) throw new Error(await res.text());
+}
+
+// ─── Stars ─────────────────────────────────────────────────────────────────
+function initStars() {
+    Object.keys(ratings).forEach(field => {
+        const container = document.getElementById(`stars-${field}`);
+        if (!container) return;
+        container.querySelectorAll('.star-btn').forEach(star => {
+            star.addEventListener('click', () => setRating(field, parseInt(star.dataset.val)));
+            star.addEventListener('mouseenter', () => highlightStars(`stars-${field}`, parseInt(star.dataset.val), true));
+            star.addEventListener('mouseleave', () => highlightStars(`stars-${field}`, ratings[field], false));
+        });
+    });
+    Object.keys(editRatings).forEach(field => {
+        const container = document.getElementById(`estars-${field}`);
+        if (!container) return;
+        container.querySelectorAll('.star-btn').forEach(star => {
+            star.addEventListener('click', () => setEditRating(field, parseInt(star.dataset.val)));
+            star.addEventListener('mouseenter', () => highlightStars(`estars-${field}`, parseInt(star.dataset.val), true));
+            star.addEventListener('mouseleave', () => highlightStars(`estars-${field}`, editRatings[field], false));
+        });
+    });
+}
+
+function setRating(field, val) {
+    ratings[field] = val;
+    highlightStars(`stars-${field}`, val, false);
+    document.getElementById(`val-${field}`).textContent = val;
+    updateTotal();
+}
+function setEditRating(field, val) {
+    editRatings[field] = val;
+    highlightStars(`estars-${field}`, val, false);
+    document.getElementById(`eval-${field}`).textContent = val;
+    updateEditTotal();
+}
+function highlightStars(containerId, val, hover) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.querySelectorAll('.star-btn').forEach(star => {
+        const sv = parseInt(star.dataset.val);
+        if (sv <= val) {
+            star.textContent = '★';
+            star.style.color = hover ? '#e8c96a' : '#c9a84c';
+        } else {
+            star.textContent = '☆';
+            star.style.color = 'rgba(245,230,200,0.2)';
+        }
+    });
+}
+function updateTotal() {
+    const sum = Object.values(ratings).reduce((a, b) => a + b, 0);
+    document.getElementById('totalScore').innerHTML = `${sum} <span style="font-size:14px; color: rgba(245,230,200,0.4); font-family: Inter, sans-serif; font-weight: 400;">/ 25</span>`;
+}
+function updateEditTotal() {
+    const sum = Object.values(editRatings).reduce((a, b) => a + b, 0);
+    document.getElementById('editTotalScore').innerHTML = `${sum} <span style="font-size:14px; color: rgba(245,230,200,0.4); font-family: Inter, sans-serif; font-weight: 400;">/ 25</span>`;
+}
+function resetStars() {
+    Object.keys(ratings).forEach(field => {
+        ratings[field] = 0;
+        highlightStars(`stars-${field}`, 0, false);
+        document.getElementById(`val-${field}`).textContent = '0';
+    });
+    updateTotal();
+}
+
+// ─── Edit Modal ────────────────────────────────────────────────────────────
+function openEditModal(exp) {
+    document.getElementById('e_id').value = exp.id;
+    document.getElementById('e_name').value = exp.name || '';
+    document.getElementById('e_date').value = exp.date || '';
+    document.getElementById('e_category').value = exp.category || '';
+    document.getElementById('e_organiser').value = exp.organiser || '';
+    document.getElementById('e_notes').value = exp.notes || '';
+    const fields = ['food_drink','location_venue','atmosphere','recommend','enjoyment'];
+    fields.forEach(field => {
+        const val = exp[field] || 0;
+        editRatings[field] = val;
+        highlightStars(`estars-${field}`, val, false);
+        document.getElementById(`eval-${field}`).textContent = val;
+    });
+    updateEditTotal();
+    document.getElementById('editModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeEditModal() {
+    document.getElementById('editModal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('editForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ratingVals = Object.values(editRatings);
+    if (ratingVals.some(v => v === 0)) { showToast('Please rate all 5 categories!', 'error'); return; }
+    const total = ratingVals.reduce((a, b) => a + b, 0);
+    const id = document.getElementById('e_id').value;
+    const data = {
+        name: document.getElementById('e_name').value.trim(),
+        date: document.getElementById('e_date').value,
+        category: document.getElementById('e_category').value,
+        organiser: document.getElementById('e_organiser').value.trim(),
+        notes: document.getElementById('e_notes').value.trim(),
+        food_drink: editRatings.food_drink,
+        location_venue: editRatings.location_venue,
+        atmosphere: editRatings.atmosphere,
+        recommend: editRatings.recommend,
+        enjoyment: editRatings.enjoyment,
+        total
+    };
+    showLoading();
+    try {
+        await patchExperience(id, data);
+        showToast('Experience updated! ✨', 'success');
+        closeEditModal();
+        await fetchAll();
+    } catch (err) {
+        showToast('Error updating: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+});
+
+// ─── Form Submit ───────────────────────────────────────────────────────────
+document.getElementById('experienceForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ratingVals = Object.values(ratings);
+    if (ratingVals.some(v => v === 0)) { showToast('Please rate all 5 categories!', 'error'); return; }
+    const total = ratingVals.reduce((a, b) => a + b, 0);
+    const data = {
+        name: document.getElementById('f_name').value.trim(),
+        date: document.getElementById('f_date').value,
+        category: document.getElementById('f_category').value,
+        organiser: document.getElementById('f_organiser').value.trim(),
+        notes: document.getElementById('f_notes').value.trim(),
+        food_drink: ratings.food_drink, location_venue: ratings.location_venue,
+        atmosphere: ratings.atmosphere, recommend: ratings.recommend, enjoyment: ratings.enjoyment,
+        total
+    };
+    showLoading();
+    try {
+        await postExperience(data);
+        showToast('Experience logged! 🎉', 'success');
+        e.target.reset();
+        resetStars();
+        await fetchAll();
+    } catch (err) {
+        showToast('Error saving: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+});
+
+// ─── Delete ────────────────────────────────────────────────────────────────
+async function handleDelete(id, name) {
+    if (!confirm(`Delete "${name}"?`)) return;
+    showLoading();
+    try {
+        await deleteExperience(id);
+        showToast('Deleted successfully', 'success');
+        await fetchAll();
+    } catch (err) {
+        showToast('Error deleting: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// ─── Render All ────────────────────────────────────────────────────────────
+function updateAll() {
+    const count = experiences.length;
+    document.getElementById('expCount').textContent = `${count} entr${count === 1 ? 'y' : 'ies'}`;
+    document.getElementById('liveCount').textContent = `${count} experiences`;
+    document.getElementById('liveCount').classList.toggle('hidden', count === 0);
+    renderLogTable();
+    if (currentTab === 'league') renderLeague();
+    if (currentTab === 'suggestions') renderSuggestions();
+    if (currentTab === 'analytics') renderAnalytics();
+}
+
+// ─── Mini score breakdown ──────────────────────────────────────────────────
+function miniScoreBreakdown(exp) {
+    const metrics = [
+        { key: 'food_drink', label: '🍽️', title: 'Food & Drink' },
+        { key: 'location_venue', label: '📍', title: 'Location/Venue' },
+        { key: 'atmosphere', label: '🎭', title: 'Atmosphere' },
+        { key: 'recommend', label: '👍', title: 'Recommend' },
+        { key: 'enjoyment', label: '😄', title: 'Enjoyment' }
+    ];
+    return `<div class="flex flex-wrap gap-2">
+        ${metrics.map(m => {
+            const val = exp[m.key] || 0;
+            const stars = '★'.repeat(val) + '☆'.repeat(5 - val);
+            const col = val >= 4 ? '#c9a84c' : val >= 3 ? '#e8c96a' : 'rgba(245,230,200,0.25)';
+            return `<div class="flex flex-col items-center rounded-lg px-2 py-1 min-w-[56px]" style="background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.15);">
+                <span class="text-base leading-none">${m.label}</span>
+                <span class="text-xs tracking-tighter leading-tight" style="color:${col};">${stars}</span>
+                <span class="text-xs font-bold" style="color: rgba(245,230,200,0.6);">${val}/5</span>
+            </div>`;
+        }).join('')}
+    </div>`;
+}
+
+// ─── Log Table ─────────────────────────────────────────────────────────────
+function renderLogTable() {
+    const empty = document.getElementById('logTableEmpty');
+    const table = document.getElementById('logTable');
+    const tbody = document.getElementById('logTableBody');
+    if (experiences.length === 0) {
+        empty.classList.remove('hidden');
+        table.classList.add('hidden');
+        return;
+    }
+    empty.classList.add('hidden');
+    table.classList.remove('hidden');
+    tbody.innerHTML = experiences.map(exp => {
+        const catClass = CAT_CSS[exp.category] || 'badge-dark';
+        const catEmoji = CAT_EMOJIS[exp.category] || '✨';
+        const scoreColor = exp.total >= 20 ? '#86efac' : exp.total >= 14 ? '#c9a84c' : '#fca5a5';
+        const dateStr = exp.date ? new Date(exp.date).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+        const safeId = exp.id;
+        const safeName = escHtml(exp.name).replace(/'/g, '&#039;');
+        return `<tr class="cursor-pointer transition-colors" onclick="toggleBreakdown('${safeId}')">
+            <td class="py-3 pr-2">
+                <div class="font-semibold text-sm flex items-center gap-1" style="color: #f5e6c8;">
+                    ${escHtml(exp.name)}
+                    <span style="color: rgba(201,168,76,0.4); font-size: 10px;">▾</span>
+                </div>
+                ${exp.notes ? `<div class="text-xs truncate max-w-[140px] mt-0.5" style="color: rgba(245,230,200,0.35);">${escHtml(exp.notes)}</div>` : ''}
+            </td>
+            <td class="py-3 pr-2 text-xs whitespace-nowrap" style="color: rgba(245,230,200,0.45);">${dateStr}</td>
+            <td class="py-3 pr-2"><span class="text-xs font-semibold px-2 py-1 rounded-full ${catClass}">${catEmoji} ${escHtml(exp.category)}</span></td>
+            <td class="py-3 pr-2 text-xs" style="color: rgba(245,230,200,0.6);">${escHtml(exp.organiser)}</td>
+            <td class="py-3 text-center"><span class="font-black text-lg" style="color:${scoreColor}; font-family: 'Playfair Display', serif;">${exp.total}</span><span class="text-xs" style="color: rgba(245,230,200,0.3);">/25</span></td>
+            <td class="py-3 text-center" onclick="event.stopPropagation()">
+                <div class="flex items-center justify-center gap-1">
+                    <button onclick="openEditModal(${JSON.stringify(exp).replace(/"/g,'&quot;')})"
+                        class="p-1.5 rounded-lg transition-colors text-sm" style="color: rgba(167,139,250,0.7);" title="Edit"
+                        onmouseover="this.style.background='rgba(167,139,250,0.1)'" onmouseout="this.style.background=''">✏️</button>
+                    <button onclick="handleDelete('${safeId}', '${safeName}')"
+                        class="p-1.5 rounded-lg transition-colors text-sm" style="color: rgba(252,165,165,0.7);" title="Delete"
+                        onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background=''">🗑️</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="breakdown-${safeId}" class="breakdown-row" style="border-bottom: 1px solid rgba(201,168,76,0.1); background: rgba(201,168,76,0.03);">
+            <td colspan="6" class="px-4 pb-3 pt-1">
+                <div class="text-xs font-semibold mb-2 uppercase tracking-widest" style="color: rgba(201,168,76,0.5);">Score Breakdown</div>
+                ${miniScoreBreakdown(exp)}
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function toggleBreakdown(id) {
+    const row = document.getElementById(`breakdown-${id}`);
+    if (!row) return;
+    row.classList.toggle('open');
+}
+
+// ─── League breakdown bars ─────────────────────────────────────────────────
+function leagueBreakdownBars(exp) {
+    const metrics = [
+        { key: 'food_drink', label: '🍽️ Food' },
+        { key: 'location_venue', label: '📍 Venue' },
+        { key: 'atmosphere', label: '🎭 Atmos.' },
+        { key: 'recommend', label: '👍 Rec.' },
+        { key: 'enjoyment', label: '😄 Enjoy' }
+    ];
+    const barColors = ['#ec4899','#38bdf8','#c4b5fd','#22c55e','#c9a84c'];
+    return `<div class="mt-3 pt-3 grid grid-cols-5 gap-1" style="border-top: 1px solid rgba(201,168,76,0.12);">
+        ${metrics.map((m, i) => {
+            const val = exp[m.key] || 0;
+            const pct = (val / 5) * 100;
+            return `<div class="flex flex-col items-center gap-1">
+                <div class="text-xs text-center leading-tight font-medium" style="color: rgba(245,230,200,0.45);">${m.label}</div>
+                <div class="w-full rounded-full h-1.5 overflow-hidden" style="background: rgba(255,255,255,0.06);">
+                    <div class="score-bar h-1.5 rounded-full" style="width:${pct}%; background:${barColors[i]};"></div>
+                </div>
+                <div class="text-xs font-bold" style="color: rgba(245,230,200,0.6);">${val}/5</div>
+            </div>`;
+        }).join('')}
+    </div>`;
+}
+
+// ─── Photo section for league cards ───────────────────────────────────────
+function photoSectionHtml(expId) {
+    const photos = photosCache[expId] || [];
+    const photoHtml = photos.length > 0
+        ? `<div class="flex flex-wrap gap-2 mt-2">
+            ${photos.map((p, idx) => `
+                <img src="${getPhotoUrl(p.storage_path)}" alt="${escHtml(p.file_name || 'photo')}"
+                    class="photo-thumb"
+                    onclick="openLightbox('${expId}', ${idx})"
+                    onerror="this.style.display='none'"/>
+            `).join('')}
+        </div>`
+        : `<p class="text-xs mt-2 italic" style="color: rgba(245,230,200,0.25);">No photos yet</p>`;
+
+    return `<div class="mt-3 pt-3" style="border-top: 1px solid rgba(201,168,76,0.1);">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest" style="color: rgba(201,168,76,0.5);">📷 Photos</span>
+            <label class="cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                style="background: rgba(201,168,76,0.1); color: #c9a84c; border: 1px solid rgba(201,168,76,0.25);"
+                onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.1)'">
+                📷 Add Photos
+                <input type="file" accept="image/*" multiple class="hidden" onchange="handlePhotoUpload('${expId}', this)"/>
+            </label>
+        </div>
+        <div id="photos-${expId}">
+            ${photoHtml}
+        </div>
+    </div>`;
+}
+
+async function handlePhotoUpload(expId, input) {
+    const files = Array.from(input.files);
+    if (!files.length) return;
+    showLoading();
+    let uploaded = 0;
+    try {
+        for (const file of files) {
+            await uploadPhoto(expId, file);
+            uploaded++;
+        }
+        // Refresh photos for this experience
+        photosCache[expId] = await fetchPhotosForExperience(expId);
+        // Re-render just the photo section
+        const el = document.getElementById(`photos-${expId}`);
+        if (el) {
+            const photos = photosCache[expId];
+            el.innerHTML = photos.length > 0
+                ? `<div class="flex flex-wrap gap-2 mt-2">
+                    ${photos.map((p, idx) => `
+                        <img src="${getPhotoUrl(p.storage_path)}" alt="${escHtml(p.file_name || 'photo')}"
+                            class="photo-thumb"
+                            onclick="openLightbox('${expId}', ${idx})"
+                            onerror="this.style.display='none'"/>
+                    `).join('')}
+                </div>`
+                : `<p class="text-xs mt-2 italic" style="color: rgba(245,230,200,0.25);">No photos yet</p>`;
+        }
+        showToast(`${uploaded} photo${uploaded>1?'s':''} uploaded! 📷`, 'success');
+    } catch (err) {
+        showToast('Photo upload failed: ' + err.message, 'error');
+    } finally {
+        hideLoading();
+        input.value = '';
+    }
+}
+
+// ─── Lightbox ──────────────────────────────────────────────────────────────
+function openLightbox(expId, startIndex) {
+    lightboxPhotos = photosCache[expId] || [];
+    if (!lightboxPhotos.length) return;
+    lightboxIndex = startIndex;
+    updateLightboxImage();
+    const lb = document.getElementById('lightbox');
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function updateLightboxImage() {
+    const photo = lightboxPhotos[lightboxIndex];
+    document.getElementById('lightboxImg').src = getPhotoUrl(photo.storage_path);
+    document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+}
+
+function lightboxPrev() {
+    lightboxIndex = (lightboxIndex - 1 + lightboxPhotos.length) % lightboxPhotos.length;
+    updateLightboxImage();
+}
+
+function lightboxNext() {
+    lightboxIndex = (lightboxIndex + 1) % lightboxPhotos.length;
+    updateLightboxImage();
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this || e.target === document.getElementById('lightboxImg')) return;
+    // clicking backdrop closes
+});
+document.getElementById('lightboxImg').addEventListener('click', function(e) { e.stopPropagation(); });
+
+// Keyboard nav for lightbox
+document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrev();
+    if (e.key === 'ArrowRight') lightboxNext();
+});
+
+// ─── League Table ──────────────────────────────────────────────────────────
+async function renderLeague() {
+    const container = document.getElementById('leagueTable');
+    if (experiences.length === 0) {
+        container.innerHTML = '<div class="text-center py-10" style="color: rgba(245,230,200,0.3);"><div class="text-4xl mb-2">🏆</div><p>No data yet</p></div>';
+        return;
+    }
+    const sorted = [...experiences].sort((a, b) => b.total - a.total);
+
+    // Load photos for all experiences
+    await Promise.all(sorted.map(async exp => {
+        if (!photosCache[exp.id]) {
+            photosCache[exp.id] = await fetchPhotosForExperience(exp.id);
+        }
+    }));
+
+    const medals = ['🥇', '🥈', '🥉'];
+    container.innerHTML = sorted.map((exp, i) => {
+        const medal = medals[i] || `<span style="color: rgba(245,230,200,0.4); font-weight: bold; font-size: 14px;">#${i+1}</span>`;
+        const pct = (exp.total / 25) * 100;
+        const barColor = exp.total >= 20 ? '#86efac' : exp.total >= 14 ? '#c9a84c' : '#fca5a5';
+        const catClass = CAT_CSS[exp.category] || 'badge-dark';
+        const catEmoji = CAT_EMOJIS[exp.category] || '✨';
+        const dateStr = exp.date ? new Date(exp.date).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '';
+        const borderClass = CAT_BORDER[exp.category] || '';
+        return `<div class="card-hover rounded-xl border-l-4 ${borderClass} p-4" style="background: rgba(255,255,255,0.04); border-top: 1px solid rgba(201,168,76,0.08); border-right: 1px solid rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.08);">
+            <div class="flex items-center gap-4">
+                <div class="text-2xl w-10 text-center flex-shrink-0">${medal}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1 flex-wrap">
+                        <span class="font-bold" style="color: #f5e6c8; font-family: 'Playfair Display', serif;">${escHtml(exp.name)}</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${catClass}">${catEmoji} ${escHtml(exp.category)}</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs mb-2" style="color: rgba(245,230,200,0.45);">
+                        <span>👤 ${escHtml(exp.organiser)}</span>
+                        ${dateStr ? `<span>📅 ${dateStr}</span>` : ''}
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 rounded-full h-1.5 overflow-hidden" style="background: rgba(255,255,255,0.08);">
+                            <div class="score-bar h-1.5 rounded-full" style="width:${pct}%; background:${barColor};"></div>
+                        </div>
+                        <span class="font-black text-sm w-14 text-right" style="color: #f5e6c8; font-family: 'Playfair Display', serif;">${exp.total}<span class="font-normal text-xs" style="color: rgba(245,230,200,0.35);">/25</span></span>
+                    </div>
+                </div>
+            </div>
+            ${leagueBreakdownBars(exp)}
+            ${photoSectionHtml(exp.id)}
+        </div>`;
+    }).join('');
+
+    // Organiser League
+    const orgMap = {};
+    experiences.forEach(exp => {
+        if (!orgMap[exp.organiser]) orgMap[exp.organiser] = { total: 0, count: 0 };
+        orgMap[exp.organiser].total += exp.total;
+        orgMap[exp.organiser].count++;
+    });
+    const orgSorted = Object.entries(orgMap)
+        .map(([name, d]) => ({ name, avg: d.total / d.count, count: d.count, total: d.total }))
+        .sort((a, b) => b.avg - a.avg);
+
+    const orgContainer = document.getElementById('organiserLeague');
+    const orgMedals = ['🥇', '🥈', '🥉'];
+    orgContainer.innerHTML = orgSorted.map((org, i) => {
+        const medal = orgMedals[i] || `<span style="color: rgba(245,230,200,0.4); font-weight: bold;">#${i+1}</span>`;
+        const pct = (org.avg / 25) * 100;
+        const bgStyle = i === 0 ? 'rgba(201,168,76,0.08)' : i === 1 ? 'rgba(180,180,180,0.06)' : i === 2 ? 'rgba(180,100,30,0.08)' : 'rgba(255,255,255,0.03)';
+        return `<div class="card-hover flex items-center gap-4 p-4 rounded-xl" style="background:${bgStyle}; border: 1px solid rgba(201,168,76,0.12);">
+            <div class="text-2xl w-10 text-center flex-shrink-0">${medal}</div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-bold text-base" style="color: #f5e6c8; font-family: 'Playfair Display', serif;">${escHtml(org.name)}</span>
+                    <div class="text-right">
+                        <div class="font-black text-lg" style="color: #c9a84c; font-family: 'Playfair Display', serif;">${org.avg.toFixed(1)}<span class="text-sm font-normal" style="color: rgba(245,230,200,0.35);">/25</span></div>
+                        <div class="text-xs" style="color: rgba(245,230,200,0.4);">${org.count} event${org.count > 1 ? 's' : ''}</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex-1 rounded-full h-1.5 overflow-hidden" style="background: rgba(255,255,255,0.08);">
+                        <div class="score-bar h-1.5 rounded-full" style="width:${pct}%; background: #c9a84c;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ─── Suggestions ──────────────────────────────────────────────────────────
+function renderSuggestions() {
+    const container = document.getElementById('suggestionsContent');
+    if (experiences.length === 0) {
+        container.innerHTML = `<div class="text-center py-16" style="color: rgba(245,230,200,0.3);"><div class="text-5xl mb-3">💡</div><p>Log some experiences first!</p></div>`;
+        return;
+    }
+    const cards = [];
+    const catStats = {};
+    ALL_CATEGORIES.forEach(c => catStats[c] = { count: 0, totalScore: 0 });
+    experiences.forEach(exp => {
+        if (catStats[exp.category]) {
+            catStats[exp.category].count++;
+            catStats[exp.category].totalScore += exp.total;
+        }
+    });
+    const notTried = ALL_CATEGORIES.filter(c => catStats[c].count === 0);
+    notTried.forEach(cat => cards.push({
+        category: cat, label: '🆕 Never Tried',
+        labelColor: 'rgba(56,189,248,0.12)', labelText: '#7dd3fc', labelBorder: 'rgba(56,189,248,0.25)',
+        title: `Explore ${cat}`, desc: `You haven't tried any ${cat.toLowerCase()} experiences yet!`,
+        suggestions: getSuggestions(cat),
+        border: 'rgba(56,189,248,0.15)', bg: 'rgba(56,189,248,0.04)'
+    }));
+    const onlyOnce = ALL_CATEGORIES.filter(c => catStats[c].count === 1);
+    onlyOnce.forEach(cat => cards.push({
+        category: cat, label: '🔁 Try Again',
+        labelColor: 'rgba(167,139,250,0.12)', labelText: '#c4b5fd', labelBorder: 'rgba(167,139,250,0.25)',
+        title: `More ${cat}`, desc: `You've only tried ${cat.toLowerCase()} once. Explore more!`,
+        suggestions: getSuggestions(cat),
+        border: 'rgba(167,139,250,0.15)', bg: 'rgba(167,139,250,0.04)'
+    }));
+    const lowAvg = ALL_CATEGORIES.filter(c => catStats[c].count >= 2 && (catStats[c].totalScore / catStats[c].count) < 14);
+    lowAvg.forEach(cat => {
+        const avg = (catStats[cat].totalScore / catStats[cat].count).toFixed(1);
+        cards.push({
+            category: cat, label: '⚠️ Improve',
+            labelColor: 'rgba(251,146,60,0.12)', labelText: '#fdba74', labelBorder: 'rgba(251,146,60,0.25)',
+            title: `Better ${cat}`, desc: `Your avg for ${cat.toLowerCase()} is ${avg}/25. Try these alternatives!`,
+            suggestions: getSuggestions(cat),
+            border: 'rgba(251,146,60,0.15)', bg: 'rgba(251,146,60,0.04)'
+        });
+    });
+    if (cards.length === 0) {
+        container.innerHTML = `<div class="text-center py-16">
+            <div class="text-5xl mb-3">🎉</div>
+            <p class="font-bold text-lg" style="color: #c9a84c; font-family: 'Playfair Display', serif;">You're doing brilliantly!</p>
+            <p class="text-sm mt-1" style="color: rgba(245,230,200,0.4);">All categories explored with excellent scores.</p>
+        </div>`;
+        return;
+    }
+    container.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        ${cards.map(card => `
+        <div class="card-hover rounded-2xl p-5" style="background:${card.bg}; border: 1px solid ${card.border};">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:${card.labelColor}; color:${card.labelText}; border: 1px solid ${card.labelBorder};">${card.label}</span>
+                <span class="text-xl">${CAT_EMOJIS[card.category] || '✨'}</span>
+            </div>
+            <h3 class="font-bold text-base mb-1" style="color: #f5e6c8; font-family: 'Playfair Display', serif;">${card.title}</h3>
+            <p class="text-xs mb-4" style="color: rgba(245,230,200,0.45);">${card.desc}</p>
+            <div class="space-y-2 mb-4">
+                ${card.suggestions.map(s => `<div class="flex items-center gap-2 text-sm" style="color: rgba(245,230,200,0.65);">
+                    <span style="color: #c9a84c;">→</span> ${s}
+                </div>`).join('')}
+            </div>
+            <button onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(card.category + ' experiences near me')}', '_blank')"
+                class="btn-gold-outline w-full text-sm font-semibold py-2 rounded-xl flex items-center justify-center gap-2">
+                🔍 Search Online
+            </button>
+        </div>`).join('')}
+    </div>`;
+}
+
+function getSuggestions(category) {
+    const s = {
+        'Date Night': ['Rooftop dining experience', 'Cocktail masterclass', 'Private cinema screening', 'Sunset boat trip', 'Cooking class for two'],
+        'Day Activity': ['Pottery workshop', 'Botanical garden visit', 'Escape room challenge', 'Kayaking adventure', 'Food market tour'],
+        'Sports': ['Go-karting session', 'Bouldering gym visit', 'Tennis coaching', 'Paddleboarding lesson', 'Archery experience'],
+        'Holiday Related': ['City break weekend', 'Glamping getaway', 'Road trip to countryside', 'Beach holiday', 'Cultural city tour'],
+        'Other': ['Stand-up comedy show', 'Live music gig', 'Museum late night event', 'Photography walk', 'Pottery class']
+    };
+    return (s[category] || ['Explore local options', 'Check event listings', 'Ask friends for tips']).slice(0, 3);
+}
+
+// ─── Analytics ─────────────────────────────────────────────────────────────
+function renderAnalytics() {
+    if (experiences.length === 0) {
+        ['statsCards','metricBars','categoryBars','scoreDistribution','topRatedBox'].forEach(id => {
+            document.getElementById(id).innerHTML = '';
+        });
+        document.getElementById('statsCards').innerHTML = `<div class="col-span-4 text-center py-10" style="color: rgba(245,230,200,0.3);"><div class="text-4xl mb-2">📊</div><p>Log some experiences to see analytics!</p></div>`;
+        return;
+    }
+    const totals = experiences.map(e => e.total);
+    const avgTotal = totals.reduce((a,b)=>a+b,0)/totals.length;
+    const maxExp = experiences.reduce((a,b)=>b.total>a.total?b:a, experiences[0]);
+    const orgCount = {};
+    experiences.forEach(e => { orgCount[e.organiser] = (orgCount[e.organiser]||0)+1; });
+    const topOrg = Object.entries(orgCount).sort((a,b)=>b[1]-a[1])[0];
+
+    const statDefs = [
+        { icon:'🎯', label:'Total Experiences', val: experiences.length, grad: 'linear-gradient(135deg,#1d4ed8,#3b82f6)' },
+        { icon:'⭐', label:'Avg Score', val: avgTotal.toFixed(1)+'/25', grad: 'linear-gradient(135deg,#b8922a,#c9a84c)' },
+        { icon:'🏆', label:'Top Score', val: maxExp.total+'/25', grad: 'linear-gradient(135deg,#166534,#22c55e)' },
+        { icon:'👑', label:'Top Organiser', val: topOrg ? topOrg[0] : '—', grad: 'linear-gradient(135deg,#6d28d9,#a78bfa)' }
+    ];
+    document.getElementById('statsCards').innerHTML = statDefs.map(s => `
+        <div class="card-hover rounded-2xl p-5 panel-glass">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3" style="background:${s.grad};">${s.icon}</div>
+            <div class="text-2xl font-black mb-1" style="color: #f5e6c8; font-family: 'Playfair Display', serif;">${s.val}</div>
+            <div class="text-xs font-medium" style="color: rgba(201,168,76,0.6); letter-spacing: 0.5px;">${s.label}</div>
+        </div>`).join('');
+
+    const metrics = [
+        { key:'food_drink', label:'🍽️ Food & Drink' },
+        { key:'location_venue', label:'📍 Location/Venue' },
+        { key:'atmosphere', label:'🎭 Atmosphere' },
+        { key:'recommend', label:'👍 Recommend' },
+        { key:'enjoyment', label:'😄 Enjoyment' }
+    ];
+    const metricColors = ['#ec4899','#38bdf8','#c4b5fd','#22c55e','#c9a84c'];
+    document.getElementById('metricBars').innerHTML = metrics.map((m, i) => {
+        const avg = experiences.reduce((s,e)=>s+(e[m.key]||0),0)/experiences.length;
+        const pct = (avg/5)*100;
+        return `<div>
+            <div class="flex justify-between text-sm mb-1">
+                <span class="font-medium" style="color: rgba(245,230,200,0.65);">${m.label}</span>
+                <span class="font-bold" style="color: #f5e6c8;">${avg.toFixed(1)}/5</span>
+            </div>
+            <div class="rounded-full h-2 overflow-hidden" style="background: rgba(255,255,255,0.07);">
+                <div class="score-bar h-2 rounded-full" style="width:${pct}%; background:${metricColors[i]};"></div>
+            </div>
+        </div>`;
+    }).join('');
+
+    const catAvgs = {}, catCounts = {};
+    experiences.forEach(e => {
+        catAvgs[e.category] = (catAvgs[e.category]||0) + e.total;
+        catCounts[e.category] = (catCounts[e.category]||0)+1;
+    });
+    const catBarColors = ['#ec4899','#38bdf8','#22c55e','#fb923c','#c4b5fd'];
+    document.getElementById('categoryBars').innerHTML = Object.entries(catAvgs).map(([cat, sum], i) => {
+        const avg = sum / catCounts[cat];
+        const pct = (avg/25)*100;
+        return `<div>
+            <div class="flex justify-between text-sm mb-1">
+                <span class="font-medium" style="color: rgba(245,230,200,0.65);">${CAT_EMOJIS[cat]||''} ${cat}</span>
+                <span class="font-bold" style="color: #f5e6c8;">${avg.toFixed(1)}/25</span>
+            </div>
+            <div class="rounded-full h-2 overflow-hidden" style="background: rgba(255,255,255,0.07);">
+                <div class="score-bar h-2 rounded-full" style="width:${pct}%; background:${catBarColors[i%catBarColors.length]};"></div>
+            </div>
+        </div>`;
+    }).join('') || '<p class="text-sm" style="color: rgba(245,230,200,0.3);">No data</p>';
+
+    const buckets = Array.from({length:25}, (_,i)=>i+1);
+    const distCounts = {};
+    totals.forEach(t => distCounts[t] = (distCounts[t]||0)+1);
+    const maxBucket = Math.max(...Object.values(distCounts), 1);
+    document.getElementById('scoreDistribution').innerHTML = buckets.map(score => {
+        const count = distCounts[score]||0;
+        const h = count ? Math.max(8, (count/maxBucket)*80) : 4;
+        return `<div class="flex flex-col items-center gap-1 group">
+            <div class="text-xs font-bold" style="color: ${count>0?'#c9a84c':'transparent'};">${count||''}</div>
+            <div class="w-full rounded-t flex items-end justify-center" style="height:80px">
+                <div class="w-full rounded" style="height:${h}px; background:${count>0?'linear-gradient(180deg,#c9a84c,#a07830)':'rgba(255,255,255,0.05)'}; transition: all 0.3s;"></div>
+            </div>
+            <div class="text-xs" style="color: rgba(245,230,200,0.3);">${score}</div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('topRatedBox').innerHTML = `<div class="rounded-2xl p-6 text-white shadow-2xl card-hover" style="background: linear-gradient(135deg,#0d1023,#1a1040,#0d1023); border: 1px solid rgba(201,168,76,0.4);">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">🏆</span>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-widest" style="color: rgba(201,168,76,0.6);">Top Rated Experience</p>
+                <h3 class="text-xl font-black" style="color: #f5e6c8; font-family: 'Playfair Display', serif;">${escHtml(maxExp.name)}</h3>
+            </div>
+            <div class="ml-auto text-right">
+                <div class="text-4xl font-black" style="color: #c9a84c; font-family: 'Playfair Display', serif;">${maxExp.total}</div>
+                <div class="text-xs" style="color: rgba(245,230,200,0.4);">out of 25</div>
+            </div>
+        </div>
+        <div class="gold-divider my-3"></div>
+        <div class="flex flex-wrap gap-3 text-sm" style="color: rgba(245,230,200,0.6);">
+            <span>📂 ${escHtml(maxExp.category)}</span>
+            <span>👤 ${escHtml(maxExp.organiser)}</span>
+            ${maxExp.date ? `<span>📅 ${new Date(maxExp.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}
+        </div>
+    </div>`;
+}
+
+// ─── Idea Board ────────────────────────────────────────────────────────────
+function timeAgo(dateStr) {
+    if (!dateStr) return '';
+    const diffDays = Math.floor((new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24));
+    if (diffDays < 1) return 'Today';
+    if (diffDays === 1) return '1 day ago';
+    if (diffDays < 14) return `${diffDays} days ago`;
+    if (diffDays < 56) { const w = Math.floor(diffDays/7); return `${w} week${w>1?'s':''} ago`; }
+    const m = Math.floor(diffDays/30); return `${m} month${m>1?'s':''} ago`;
+}
+function timeAgoColor(dateStr) {
+    if (!dateStr) return 'rgba(245,230,200,0.3)';
+    const d = Math.floor((new Date() - new Date(dateStr)) / (1000*60*60*24));
+    return d < 14 ? '#86efac' : d < 56 ? '#c9a84c' : '#fca5a5';
+}
+
+function renderIdeaBoard() {
+    const activeIdeas = ideas.filter(i => i.status !== 'done').sort((a,b) => (a.priority_order??999)-(b.priority_order??999));
+    const doneIdeas = ideas.filter(i => i.status === 'done').sort((a,b) => new Date(b.completed_at||0)-new Date(a.completed_at||0));
+    document.getElementById('ideaActiveCount').textContent = `${activeIdeas.length} idea${activeIdeas.length!==1?'s':''}`;
+    document.getElementById('ideaDoneCount').textContent = `${doneIdeas.length} done`;
+
+    const board = document.getElementById('ideaBoard');
+    const emptyEl = document.getElementById('ideaBoardEmpty');
+    if (activeIdeas.length === 0) {
+        emptyEl.classList.remove('hidden');
+        board.innerHTML = '';
+    } else {
+        emptyEl.classList.add('hidden');
+        board.innerHTML = activeIdeas.map((idea, idx) => {
+            const catClass = CAT_CSS[idea.category] || 'badge-dark';
+            const catEmoji = CAT_EMOJIS[idea.category] || '✨';
+            const borderClass = CAT_BORDER[idea.category] || '';
+            const taColor = timeAgoColor(idea.created_at);
+            const ta = timeAgo(idea.created_at);
+            return `<div class="idea-card rounded-xl border-l-4 ${borderClass} px-4 py-3 flex items-center gap-3 group"
+                draggable="true" data-id="${idea.id}" data-index="${idx}"
+                ondragstart="onIdeaDragStart(event, ${idx})" ondragover="onIdeaDragOver(event)"
+                ondragleave="onIdeaDragLeave(event)" ondrop="onIdeaDrop(event, ${idx})" ondragend="onIdeaDragEnd(event)"
+                style="background: rgba(255,255,255,0.04); border-top: 1px solid rgba(201,168,76,0.08); border-right: 1px solid rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.08);">
+                <div class="drag-handle text-lg select-none flex-shrink-0" style="color: rgba(245,230,200,0.2);" title="Drag to reorder">≡</div>
+                <div class="text-xs font-black rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0" style="background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3);">${idx+1}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-semibold text-sm" style="color: #f5e6c8;">${escHtml(idea.name)}</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${catClass}">${catEmoji} ${escHtml(idea.category)}</span>
+                    </div>
+                    ${idea.notes ? `<p class="text-xs mt-0.5 truncate" style="color: rgba(245,230,200,0.35);">${escHtml(idea.notes)}</p>` : ''}
+                    <div class="flex items-center gap-1 mt-1">
+                        <span class="text-xs">⏱️</span>
+                        <span class="text-xs font-medium" style="color:${taColor};">${ta}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onclick="handleMarkDone('${idea.id}')"
+                        class="p-1.5 rounded-lg transition-colors text-sm" style="color: rgba(134,239,172,0.7);"
+                        onmouseover="this.style.background='rgba(34,197,94,0.1)'" onmouseout="this.style.background=''" title="Mark Done">✅</button>
+                    <button onclick="handleDeleteIdea('${idea.id}', '${escHtml(idea.name).replace(/'/g,'&#039;')}')"
+                        class="p-1.5 rounded-lg transition-colors text-sm" style="color: rgba(252,165,165,0.7);"
+                        onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background=''" title="Delete">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    const completedBoard = document.getElementById('completedBoard');
+    const completedEmpty = document.getElementById('completedBoardEmpty');
+    if (doneIdeas.length === 0) {
+        completedEmpty.classList.remove('hidden');
+        completedBoard.innerHTML = '';
+    } else {
+        completedEmpty.classList.add('hidden');
+        completedBoard.innerHTML = doneIdeas.map(idea => {
+            const catClass = CAT_CSS[idea.category] || 'badge-dark';
+            const catEmoji = CAT_EMOJIS[idea.category] || '✨';
+            const borderClass = CAT_BORDER[idea.category] || '';
+            const completedDate = idea.completed_at
+                ? new Date(idea.completed_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+                : '';
+            return `<div class="completed-card rounded-xl border-l-4 ${borderClass} px-4 py-3 flex items-center gap-3 group"
+                style="background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-semibold text-sm line-through" style="color: rgba(245,230,200,0.3);">${escHtml(idea.name)}</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${catClass} opacity-50">${catEmoji} ${escHtml(idea.category)}</span>
+                    </div>
+                    ${idea.notes ? `<p class="text-xs mt-0.5 truncate line-through" style="color: rgba(245,230,200,0.2);">${escHtml(idea.notes)}</p>` : ''}
+                    ${completedDate ? `<p class="text-xs mt-0.5" style="color: rgba(134,239,172,0.4);">✅ Completed ${completedDate}</p>` : ''}
+                </div>
+                <div class="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onclick="handleRestoreIdea('${idea.id}')"
+                        class="px-2 py-1.5 rounded-lg transition-colors text-xs font-semibold" style="color: rgba(167,139,250,0.7);"
+                        onmouseover="this.style.background='rgba(167,139,250,0.1)'" onmouseout="this.style.background=''" title="Restore">↩ Restore</button>
+                    <button onclick="handleDeleteIdea('${idea.id}', '${escHtml(idea.name).replace(/'/g,'&#039;')}')"
+                        class="p-1.5 rounded-lg transition-colors text-sm" style="color: rgba(252,165,165,0.5);"
+                        onmouseover="this.style.background='rgba(239,68,68,0.1)'" onmouseout="this.style.background=''">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+}
+
+// ─── Drag & Drop ───────────────────────────────────────────────────────────
+function onIdeaDragStart(event, index) {
+    dragSrcIndex = index;
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', index);
+    setTimeout(() => event.target.classList.add('dragging'), 0);
+}
+function onIdeaDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    event.currentTarget.classList.add('drag-over');
+}
+function onIdeaDragLeave(event) { event.currentTarget.classList.remove('drag-over'); }
+function onIdeaDragEnd(event) {
+    event.target.classList.remove('dragging');
+    document.querySelectorAll('.idea-card').forEach(c => c.classList.remove('drag-over'));
+}
+async function onIdeaDrop(event, dropIndex) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-over');
+    if (dragSrcIndex === null || dragSrcIndex === dropIndex) return;
+    const activeIdeas = ideas.filter(i => i.status !== 'done').sort((a,b)=>(a.priority_order??999)-(b.priority_order??999));
+    const reordered = [...activeIdeas];
+    const [moved] = reordered.splice(dragSrcIndex, 1);
+    reordered.splice(dropIndex, 0, moved);
+    reordered.forEach((idea, idx) => { idea.priority_order = idx + 1; });
+    renderIdeaBoard();
+    try {
+        await Promise.all(reordered.map((idea, idx) => patchIdea(idea.id, { priority_order: idx + 1 })));
+    } catch (err) {
+        showToast('Error saving order: ' + err.message, 'error');
+        ideas = await fetchIdeas();
+        renderIdeaBoard();
+    }
+    dragSrcIndex = null;
+}
+
+async function handleMarkDone(id) {
+    showLoading();
+    try {
+        await patchIdea(id, { status: 'done', completed_at: new Date().toISOString() });
+        ideas = await fetchIdeas();
+        renderIdeaBoard();
+        showToast('Marked as done! 🎉', 'success');
+    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+    finally { hideLoading(); }
+}
+async function handleRestoreIdea(id) {
+    showLoading();
+    try {
+        const active = ideas.filter(i => i.status !== 'done');
+        await patchIdea(id, { status: 'active', completed_at: null, priority_order: active.length + 1 });
+        ideas = await fetchIdeas();
+        renderIdeaBoard();
+        showToast('Idea restored! ↩', 'success');
+    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+    finally { hideLoading(); }
+}
+async function handleDeleteIdea(id, name) {
+    if (!confirm(`Delete idea "${name}"?`)) return;
+    showLoading();
+    try {
+        await deleteIdea(id);
+        ideas = ideas.filter(i => i.id !== id);
+        renderIdeaBoard();
+        showToast('Idea deleted', 'success');
+    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+    finally { hideLoading(); }
+}
+
+function toggleCompletedSection() {
+    const section = document.getElementById('completedSection');
+    const chevron = document.getElementById('completedChevron');
+    section.classList.toggle('open');
+    chevron.style.transform = section.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+document.getElementById('ideaForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('idea_name').value.trim();
+    const category = document.getElementById('idea_category').value;
+    const notes = document.getElementById('idea_notes').value.trim();
+    if (!name || !category) { showToast('Please fill in name and category!', 'error'); return; }
+    const activeIdeas = ideas.filter(i => i.status !== 'done');
+    showLoading();
+    try {
+        await postIdea({ name, category, notes, priority_order: activeIdeas.length + 1, status: 'active' });
+        showToast('Idea added! 💡', 'success');
+        e.target.reset();
+        ideas = await fetchIdeas();
+        renderIdeaBoard();
+    } catch (err) { showToast('Error saving idea: ' + err.message, 'error'); }
+    finally { hideLoading(); }
+});
+
+// ─── Tab Switching ─────────────────────────────────────────────────────────
+function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
+    document.getElementById(`panel-${tab}`).classList.remove('hidden');
+    document.getElementById(`tab-${tab}`).classList.add('tab-active');
+    if (tab === 'league') renderLeague();
+    if (tab === 'suggestions') renderSuggestions();
+    if (tab === 'analytics') renderAnalytics();
+    if (tab === 'ideas') renderIdeaBoard();
+    if (tab === 'spin') initWheelIfNeeded();
+}
+
+// ─── Utils ─────────────────────────────────────────────────────────────────
+function escHtml(str) {
+    return (str||'').toString()
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+// ─── Spin the Wheel ────────────────────────────────────────────────────────
+const WHEEL_SEGMENTS = [
+    { label: 'Free Drink',    color: '#312e81' },
+    { label: 'Mystery Prize', color: '#92400e' },
+    { label: 'Winner!',       color: '#7f1d1d' },
+    { label: 'Lucky Dip',     color: '#134e4a' },
+    { label: 'Surprise!',     color: '#831843' },
+    { label: 'Try Again',     color: '#1e3a5f' },
+    { label: 'Jackpot!',      color: '#14532d' },
+    { label: 'Special Prize', color: '#7c2d12' }
+];
+const NUM_SEGMENTS = WHEEL_SEGMENTS.length;
+const SEG_ANGLE = (2 * Math.PI) / NUM_SEGMENTS;
+let wheelAngle = 0, wheelSpinning = false, wheelAnimFrame = null, wheelInitialised = false;
+
+function initWheelIfNeeded() {
+    if (!wheelInitialised) { drawWheel(wheelAngle); wheelInitialised = true; }
+}
+
+function drawWheel(angle) {
+    const canvas = document.getElementById('wheelCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 8;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Outer ring
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r + 6, 0, 2*Math.PI);
+    ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+    ctx.lineWidth = 10;
+    ctx.stroke();
+    ctx.restore();
+    for (let i = 0; i < NUM_SEGMENTS; i++) {
+        const startAngle = angle + i * SEG_ANGLE;
+        const endAngle = startAngle + SEG_ANGLE;
+        const seg = WHEEL_SEGMENTS[i];
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = seg.color;
+        ctx.fill();
+        // Gold tint overlay
+        const grad = ctx.createRadialGradient(cx, cy, r*0.15, cx, cy, r);
+        grad.addColorStop(0, 'rgba(201,168,76,0.1)');
+        grad.addColorStop(1, 'rgba(0,0,0,0.15)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, startAngle, endAngle);
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(startAngle + SEG_ANGLE / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#f5e6c8';
+        ctx.shadowColor = 'rgba(0,0,0,0.7)';
+        ctx.shadowBlur = 4;
+        ctx.font = 'bold 14px Inter, sans-serif';
+        ctx.fillText(seg.label, r - 14, 5);
+        ctx.restore();
+    }
+    // Hub
+    ctx.beginPath();
+    ctx.arc(cx, cy, 28, 0, 2*Math.PI);
+    const hubGrad = ctx.createRadialGradient(cx-6, cy-6, 2, cx, cy, 28);
+    hubGrad.addColorStop(0, '#e8c96a');
+    hubGrad.addColorStop(1, '#92400e');
+    ctx.fillStyle = hubGrad;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(201,168,76,0.6)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx, cy, 8, 0, 2*Math.PI);
+    ctx.fillStyle = '#f5e6c8';
+    ctx.fill();
+}
+
+function spinWheel() {
+    if (wheelSpinning) return;
+    wheelSpinning = true;
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    btn.classList.add('opacity-60');
+    const targetSegIdx = Math.floor(Math.random() * NUM_SEGMENTS);
+    const extraSpins = (5 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
+    const targetAngleMod = -Math.PI / 2 - (targetSegIdx * SEG_ANGLE + SEG_ANGLE / 2);
+    const currentNorm = wheelAngle % (2 * Math.PI);
+    let diff = targetAngleMod - currentNorm;
+    while (diff < Math.PI / 4) diff += 2 * Math.PI;
+    const totalRotation = extraSpins + diff;
+    const startAngle = wheelAngle;
+    const duration = 4500 + Math.random() * 1000;
+    const startTime = performance.now();
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    function animate(now) {
+        const t = Math.min((now - startTime) / duration, 1);
+        wheelAngle = startAngle + totalRotation * easeOut(t);
+        drawWheel(wheelAngle);
+        if (t < 1) { wheelAnimFrame = requestAnimationFrame(animate); }
+        else { wheelAngle = startAngle + totalRotation; wheelSpinning = false; onSpinComplete(); }
+    }
+    wheelAnimFrame = requestAnimationFrame(animate);
+}
+
+function onSpinComplete() {
+    const flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;inset:0;background:rgba(201,168,76,0.15);z-index:9999;pointer-events:none;opacity:0.8;transition:opacity 0.4s;';
+    document.body.appendChild(flash);
+    setTimeout(() => { flash.style.opacity = '0'; setTimeout(() => flash.remove(), 400); }, 80);
+    launchConfetti();
+    setTimeout(showSpinModal, 350);
+}
+
+function showSpinModal() {
+    const modal = document.getElementById('spinModal');
+    const panel = document.getElementById('spinModalPanel');
+    const bg = document.getElementById('spinModalBg');
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        bg.style.background = 'rgba(0,0,0,0.75)';
+        panel.style.transform = 'translateY(0)';
+    });
+    spawnFoamBubbles();
+}
+
+function closeSpinModal() {
+    const modal = document.getElementById('spinModal');
+    const panel = document.getElementById('spinModalPanel');
+    const bg = document.getElementById('spinModalBg');
+    panel.style.transform = 'translateY(100%)';
+    bg.style.background = 'rgba(0,0,0,0)';
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('foamBubbles').innerHTML = '';
+        stopConfetti();
+        const btn = document.getElementById('spinBtn');
+        btn.disabled = false;
+        btn.classList.remove('opacity-60');
+    }, 550);
+}
+
+function spawnFoamBubbles() {
+    const container = document.getElementById('foamBubbles');
+    container.innerHTML = '';
+    for (let i = 0; i < 22; i++) {
+        const b = document.createElement('div');
+        const size = 8 + Math.random() * 22;
+        const left = 5 + Math.random() * 90;
+        const delay = Math.random() * 2.5;
+        const dur = 2.5 + Math.random() * 2;
+        b.style.cssText = `position:absolute;bottom:-${size}px;left:${left}%;width:${size}px;height:${size}px;background:rgba(201,168,76,${0.1+Math.random()*0.2});border-radius:50%;border:1px solid rgba(201,168,76,0.3);animation:bubbleRise ${dur}s ease-in ${delay}s infinite;pointer-events:none;`;
+        container.appendChild(b);
+    }
+}
+
+// ─── Confetti ──────────────────────────────────────────────────────────────
+let confettiParticles = [], confettiFrame = null, confettiRunning = false;
+const CONFETTI_COLORS = ['#c9a84c','#f5e6c8','#e8c96a','#fbbf24','#a07830','#ef4444','#8b5cf6','#06b6d4','#ec4899','#10b981'];
+
+function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    canvas.style.display = 'block';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    confettiParticles = [];
+    const cx = window.innerWidth/2, cy = window.innerHeight/2;
+    for (let i = 0; i < 180; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = 4 + Math.random() * 12;
+        confettiParticles.push({ x:cx, y:cy, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed-4, color:CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)], size:6+Math.random()*8, rotation:Math.random()*360, rotSpeed:(Math.random()-0.5)*12, gravity:0.35, alpha:1, shape:Math.random()>0.5?'rect':'circle' });
+    }
+    confettiRunning = true;
+    animateConfetti();
+}
+
+function animateConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettiParticles.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy; p.vy+=p.gravity; p.vx*=0.99; p.rotation+=p.rotSpeed;
+        if (p.y > canvas.height*0.85) p.alpha -= 0.025;
+        if (p.alpha<=0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation*Math.PI/180);
+        ctx.fillStyle = p.color;
+        if (p.shape==='rect') { ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2); }
+        else { ctx.beginPath(); ctx.arc(0,0,p.size/2,0,2*Math.PI); ctx.fill(); }
+        ctx.restore();
+    });
+    confettiParticles = confettiParticles.filter(p => p.alpha > 0);
+    if (confettiRunning && confettiParticles.length > 0) { confettiFrame = requestAnimationFrame(animateConfetti); }
+    else { canvas.style.display='none'; confettiRunning=false; }
+}
+
+function stopConfetti() {
+    confettiRunning = false;
+    if (confettiFrame) cancelAnimationFrame(confettiFrame);
+    const canvas = document.getElementById('confettiCanvas');
+    if (canvas) canvas.style.display = 'none';
+}
+
+// ─── Modal backdrop close ──────────────────────────────────────────────────
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEditModal();
+});
+document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+});
+
+// ─── Init ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+    initStars();
+    document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
+    fetchAll();
+    try {
+        ideas = await fetchIdeas();
+        renderIdeaBoard();
+    } catch (err) {
+        console.warn('Ideas table not ready:', err.message);
+    }
+    setTimeout(() => {
+        document.querySelectorAll('.score-bar').forEach(bar => {
+            const w = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => bar.style.width = w, 50);
+        });
+    }, 300);
+});
+</script>
+</body>
+</html>
